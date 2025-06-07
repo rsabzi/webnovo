@@ -1,0 +1,619 @@
+/* استایل‌های پایه ربات چت */
+#ai-chatbot-container {
+    position: fixed;
+    z-index: 9999; /* برای قرارگیری روی سایر عناصر */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; /* فونت مدرن و سازگار */
+}
+
+/* == دکمه شناور باز/بسته کردن چت == */
+#ai-chatbot-toggle {
+    position: absolute; /* موقعیت‌دهی نسبت به والد */
+    right: 1180px;      /* موقعیت اولیه از راست - بدون تغییر */
+    top: 320px;         /* موقعیت اولیه از بالا - بدون تغییر */
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* گرادیانت جذاب */
+    border-radius: 50%; /* دایره‌ای شکل */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2); /* سایه نرم‌تر و مدرن‌تر */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* انتقال نرم برای تحولات */
+    animation: float 3s ease-in-out infinite; /* انیمیشن شناور بودن */
+}
+
+/* راهنمای متنی (tooltip) برای دکمه */
+#ai-chatbot-toggle::after {
+    content: 'AI BOT';
+    position: absolute;
+    top: -30px; /* فاصله بیشتر از دکمه */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333; /* پس‌زمینه تیره‌تر برای خوانایی بهتر */
+    color: white;
+    padding: 5px 10px; /* پدینگ بهتر */
+    border-radius: 8px; /* گوشه‌های گردتر */
+    font-size: 11px;
+    font-weight: 600; /* کمی ضخیم‌تر */
+    opacity: 0;
+    transition: opacity 0.3s ease, top 0.3s ease; /* انتقال نرم برای ظاهر شدن */
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    pointer-events: none; /* عدم تداخل با کلیک روی دکمه */
+}
+
+#ai-chatbot-toggle:hover::after {
+    opacity: 1;
+    top: -35px; /* کمی بالاتر در حالت هاور */
+}
+
+/* آیکون داخل دکمه */
+#ai-chatbot-toggle svg {
+    width: 30px;
+    height: 30px;
+    animation: pulse 2s ease-in-out infinite alternate; /* انیمیشن ضربان با alternate */
+}
+
+/* انیمیشن شناور شدن دکمه */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* انیمیشن ضربان آیکون */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% { /* تغییر به 100% برای alternate */
+        transform: scale(1.1);
+    }
+}
+
+/* حالت hover برای دستگاه‌هایی که از hover پشتیبانی می‌کنند */
+@media (hover: hover) {
+    #ai-chatbot-toggle:hover {
+        transform: scale(1.1) translateY(-2px); /* ترکیب scale و translate برای جلوه بهتر */
+        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3); /* سایه برجسته‌تر در هاور */
+    }
+}
+
+/* حالت active برای لمس و کلیک */
+#ai-chatbot-toggle:active {
+    transform: scale(0.95);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15); /* سایه کمتر در حالت فشرده */
+}
+
+/* Media Queries برای دکمه شناور */
+/* صفحه‌نمایش‌های خیلی بزرگ */
+@media (min-width: 1920px) {
+    #ai-chatbot-toggle {
+        right: calc(1180px * 1.1); /* حفظ تناسب با موقعیت اولیه */
+        top: calc(320px * 1.1);   /* حفظ تناسب با موقعیت اولیه */
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* تبلت بزرگ و دسکتاپ کوچک */
+@media (max-width: 1200px) {
+    #ai-chatbot-toggle {
+        right: calc(1180px * 0.85);
+        top: calc(320px * 0.85);
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* تبلت */
+@media (max-width: 768px) {
+    #ai-chatbot-toggle {
+        right: 20px; /* تغییر به موقعیت ثابت‌تر در موبایل */
+        top: auto;   /* حذف top */
+        bottom: 20px;/* چسبیدن به پایین صفحه */
+        width: 50px;
+        height: 50px;
+    }
+    #ai-chatbot-toggle::after { /* مخفی کردن tooltip در موبایل برای سادگی */
+      display: none;
+    }
+}
+
+/* موبایل بزرگ */
+@media (max-width: 480px) {
+    #ai-chatbot-toggle {
+        right: 15px;
+        bottom: 15px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* موبایل کوچک */
+@media (max-width: 320px) {
+    #ai-chatbot-toggle {
+        right: 10px;
+        bottom: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+/* == پنجره چت == */
+#ai-chatbot-window {
+    position: fixed;
+    bottom: 45px; /* موقعیت اولیه از پایین - بدون تغییر */
+    left: 90px;   /* موقعیت اولیه از چپ - بدون تغییر */
+    width: 360px; /* عرض کمی بیشتر برای ظاهر بهتر */
+    height: 520px;/* ارتفاع کمی بیشتر */
+    background: #ffffff;
+    border-radius: 16px; /* گوشه‌های گردتر و مدرن‌تر */
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25); /* سایه عمیق‌تر و مشخص‌تر */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 10000; /* بالاتر از دکمه */
+    transform: scale(0.95) translateY(20px); /* انیمیشن اولیه برای ورود */
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* کلاس برای نمایش پنجره چت */
+#ai-chatbot-window.active {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* هدر پنجره چت */
+#ai-chatbot-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 18px 20px; /* پدینگ کمی بیشتر */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 16px; /* هماهنگ با پنجره */
+    border-top-right-radius: 16px;
+}
+
+#ai-chatbot-header h4 {
+    margin: 0;
+    font-size: 17px; /* فونت کمی بزرگتر */
+    font-weight: 600; /* ضخامت بیشتر برای عنوان */
+}
+
+/* دکمه بستن پنجره چت */
+#ai-chatbot-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 26px; /* اندازه بزرگتر برای راحتی کلیک */
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#ai-chatbot-close:hover {
+    opacity: 1;
+    transform: rotate(90deg); /* افکت چرخش در هاور */
+}
+
+/* ناحیه پیام‌ها */
+#ai-chatbot-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #f7f9fc; /* پس‌زمینه روشن‌تر و آرامش‌بخش‌تر */
+    scroll-behavior: smooth; /* اسکرول نرم */
+}
+
+/* استایل پیام‌های کاربر و ربات */
+.ai-message, .user-message {
+    margin-bottom: 15px;
+    padding: 12px 18px; /* پدینگ متناسب */
+    border-radius: 20px; /* گوشه‌های گردتر برای پیام‌ها */
+    max-width: 85%; /* حداکثر عرض پیام */
+    line-height: 1.5; /* فاصله خطوط بهتر */
+    font-size: 14.5px; /* اندازه فونت کمی بهینه شده */
+    word-wrap: break-word; /* شکستن کلمات طولانی */
+}
+
+.ai-message {
+    background: #e9eaf6; /* رنگ پس‌زمینه ملایم‌تر برای ربات */
+    color: #333; /* رنگ متن تیره‌تر برای خوانایی */
+    margin-right: auto; /* چیدمان از چپ */
+    border-bottom-left-radius: 6px; /* ایجاد ظاهر "دنباله‌دار" */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.user-message {
+    background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%); /* گرادیانت کمی روشن‌تر */
+    color: white;
+    margin-left: auto; /* چیدمان از راست */
+    text-align: right;
+    direction: rtl; /* برای متن فارسی */
+    border-bottom-right-radius: 6px; /* ایجاد ظاهر "دنباله‌دار" */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ناحیه ورودی متن */
+#ai-chatbot-input-area {
+    padding: 15px 20px;
+    background: #ffffff;
+    border-top: 1px solid #e8eaed; /* جداکننده ظریف‌تر */
+    display: flex;
+    gap: 10px; /* فاصله بین ورودی و دکمه */
+    align-items: center; /* هم‌ترازی عمودی */
+}
+
+#ai-chatbot-input {
+    flex: 1;
+    padding: 14px 18px; /* پدینگ بیشتر برای راحتی تایپ */
+    border: 1px solid #dce1e6;
+    border-radius: 25px;
+    outline: none;
+    font-size: 14.5px;
+    direction: rtl;
+    text-align: right;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    resize: none; /* جلوگیری از تغییر اندازه توسط کاربر */
+    min-height: 48px; /* حداقل ارتفاع برای ورودی */
+}
+
+#ai-chatbot-input:focus {
+    border-color: #788cfa;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15); /* سایه فوکوس واضح‌تر */
+}
+
+/* دکمه ارسال پیام */
+#ai-chatbot-send {
+    padding: 0; /* حذف پدینگ اضافی، با آیکون کنترل می‌شود */
+    width: 48px; /* عرض ثابت */
+    height: 48px; /* ارتفاع ثابت */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%; /* دکمه دایره‌ای */
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#ai-chatbot-send svg { /* برای قرار دادن آیکون ارسال */
+    width: 22px;
+    height: 22px;
+}
+
+
+#ai-chatbot-send:hover {
+    transform: translateY(-2px) scale(1.05); /* افکت هاور بهتر */
+    box-shadow: 0 5px 18px rgba(102, 126, 234, 0.35);
+}
+
+#ai-chatbot-send:active {
+    transform: translateY(0px) scale(1);
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+}
+
+/* انیمیشن بارگذاری */
+.loading-dots span { /* استایل جدید برای نقاط بارگذاری */
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #667eea;
+    margin: 0 2px;
+    animation: loadingDots 1.4s infinite ease-in-out both;
+}
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loadingDots {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+
+
+/* Media Queries برای پنجره چت */
+/* لپ‌تاپ و دسکتاپ کوچک */
+@media (max-width: 1200px) {
+    #ai-chatbot-window {
+        width: 340px; /* تنظیم عرض برای این اندازه */
+        height: 500px;
+        left: 40px;
+        bottom: 35px;
+    }
+}
+
+/* تبلت */
+@media (max-width: 768px) {
+    #ai-chatbot-window {
+        width: calc(100vw - 40px); /* عرض کامل با کمی فاصله از طرفین */
+        max-width: 380px; /* حداکثر عرض در تبلت */
+        height: calc(100% - 80px); /* ارتفاع بیشتر برای تبلت */
+        max-height: 550px;
+        left: 20px;
+        bottom: 60px; /* فاصله از پایین با توجه به دکمه شناور */
+        border-radius: 12px;
+    }
+}
+
+/* موبایل بزرگ */
+@media (max-width: 480px) {
+    #ai-chatbot-window {
+        width: calc(100vw - 20px); /* تقریبا تمام صفحه */
+        max-width: none; /* حذف محدودیت عرض */
+        height: calc(100% - 70px); /* ارتفاع بیشتر با توجه به دکمه شناور */
+        max-height: none;
+        left: 10px;
+        bottom: 60px;
+        border-radius: 12px; /* حفظ گوشه‌های گرد */
+        padding: 0; /* حذف پدینگ اضافی اگر بوده */
+    }
+    .ai-message, .user-message {
+        max-width: 90%;
+        font-size: 14px;
+    }
+    #ai-chatbot-input {
+        padding: 12px 16px;
+        min-height: 44px;
+    }
+    #ai-chatbot-send {
+        width: 44px;
+        height: 44px;
+    }
+     #ai-chatbot-send svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* موبایل خیلی کوچک */
+@media (max-width: 360px) {
+    #ai-chatbot-window {
+        width: 100vw;
+        height: calc(100% - 50px); /* ارتفاع کامل صفحه با در نظر گرفتن دکمه */
+        left: 0;
+        bottom: 50px; /* چسبیده به دکمه شناور */
+        border-radius: 0; /* تمام صفحه بدون گوشه گرد */
+        border-top-left-radius: 12px; /* گوشه‌های گرد فقط در بالا */
+        border-top-right-radius: 12px;
+    }
+     #ai-chatbot-header {
+        padding: 15px;
+    }
+    #ai-chatbot-header h4 {
+        font-size: 16px;
+    }
+    #ai-chatbot-messages {
+        padding: 15px;
+    }
+    #ai-chatbot-input-area {
+        padding: 10px 15px;
+    }
+}
+/* chatbot.css */
+
+/* ... (استایل‌های قبلی شما) ... */
+
+/* استایل دکمه ارسال نتیجه برای مدیریت */
+#ai-chatbot-footer {
+    display: flex;
+    flex-direction: column; /* برای قرارگیری دکمه زیر بخش ورودی */
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+}
+
+#ai-chatbot-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px; /* فاصله از دکمه پایینی */
+}
+
+#ai-chatbot-send-to-management {
+    background-color: #4CAF50; /* سبز */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* تمام عرض فوتر */
+    box-sizing: border-box;
+}
+
+#ai-chatbot-send-to-management:hover {
+    background-color: #45a049;
+}
+
+#ai-chatbot-send-to-management:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* استایل مودال اطلاعات تماس */
+.chatbot-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.chatbot-modal-content {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+    margin: 10% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.chatbot-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: 300;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chatbot-modal-close:hover {
+    color: #ff4444;
+    transform: rotate(90deg);
+}
+
+#contact-modal-message {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+#ai-chatbot-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#ai-chatbot-contact-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#ai-chatbot-contact-form label {
+    color: #34495e;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+#ai-chatbot-contact-form input {
+    padding: 12px 15px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+#ai-chatbot-contact-form input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    outline: none;
+}
+
+#ai-chatbot-contact-form input::placeholder {
+    color: #a0aec0;
+}
+
+#chatbot-submit-contact-info {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+#chatbot-submit-contact-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+}
+
+#chatbot-submit-contact-info:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+#chatbot-submission-status {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    background-color: #f8fafc;
+    border: 1px solid #e0e6ed;
+    margin-top: 1rem;
+}
+
+#chatbot-submission-status.loading {
+    color: #3498db;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+#chatbot-submission-status.success {
+    color: #27ae60;
+    background-color: rgba(39, 174, 96, 0.1);
+    border-color: rgba(39, 174, 96, 0.2);
+}
+
+#chatbot-submission-status.error {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-color: rgba(231, 76, 60, 0.2);
+}
+
+/* استایل برای هدر در پنجره چت (برای همخوانی با فوتر جدید) */
+#ai-chatbot-header {
+    /* ... استایل‌های قبلی هدر ... */
+    padding-bottom: 10px; /* برای ایجاد فاصله اگر فوتر باعث شلوغی شود */
+}
+
+/* تنظیمات اسکرول برای قسمت پیام‌ها */
+#ai-chatbot-messages {
+    /* ... استایل‌های قبلی ... */
+    max-height: calc(100% - 150px); /* ارتفاع هدر + ارتفاع فوتر جدید (تقریبی) */
+    /* شما باید ارتفاع فوتر را دقیق‌تر محاسبه و تنظیم کنید */
+}
+

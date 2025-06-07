@@ -7,9 +7,9 @@
 
 /* == دکمه شناور باز/بسته کردن چت == */
 #ai-chatbot-toggle {
-    position: absolute; /* موقعیت‌دهی نسبت به والد */
-    right: 1180px;      /* موقعیت اولیه از راست - بدون تغییر */
-    top: 320px;         /* موقعیت اولیه از بالا - بدون تغییر */
+    position: fixed; /* موقعیت ثابت نسبت به viewport */
+    bottom: 20px;     /* فاصله از پایین */
+    right: 20px;      /* فاصله از راست */
     width: 60px;
     height: 60px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* گرادیانت جذاب */
@@ -93,8 +93,8 @@
 /* صفحه‌نمایش‌های خیلی بزرگ */
 @media (min-width: 1920px) {
     #ai-chatbot-toggle {
-        right: calc(1180px * 1.1); /* حفظ تناسب با موقعیت اولیه */
-        top: calc(320px * 1.1);   /* حفظ تناسب با موقعیت اولیه */
+        bottom: 30px; /* کمی بیشتر فاصله برای экраدهای بزرگ */
+        right: 30px;  /* کمی بیشتر فاصله برای экраدهای بزرگ */
         width: 70px;
         height: 70px;
     }
@@ -103,8 +103,8 @@
 /* تبلت بزرگ و دسکتاپ کوچک */
 @media (max-width: 1200px) {
     #ai-chatbot-toggle {
-        right: calc(1180px * 0.85);
-        top: calc(320px * 0.85);
+        /* Default bottom: 20px; right: 20px; is likely fine */
+        /* Only adjust size if necessary, or minor position tweaks */
         width: 55px;
         height: 55px;
     }
@@ -113,9 +113,9 @@
 /* تبلت */
 @media (max-width: 768px) {
     #ai-chatbot-toggle {
-        right: 20px; /* تغییر به موقعیت ثابت‌تر در موبایل */
-        top: auto;   /* حذف top */
-        bottom: 20px;/* چسبیدن به پایین صفحه */
+        /* This already aligns with new defaults: bottom: 20px; right: 20px; */
+        /* top: auto; is good to ensure no conflict if top was ever set by a broader rule */
+        top: auto;
         width: 50px;
         height: 50px;
     }

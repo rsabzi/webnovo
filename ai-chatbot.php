@@ -64,7 +64,7 @@ class AI_Chatbot_Plugin {
     
     public function get_default_options() {
         return array(
-            'api_key' => 'AIzaSyABTUCiK1CZVDABAWa4W16ucAWYShwby10', // کلید پیش‌فرض شما
+            'api_key' => '', // کلید پیش‌فرض شما
             'bot_name' => 'دستیار نوین وب',
             'brand_name' => 'نوین وب',
             'company_description' => 'شرکت نوین وب، ارائه‌دهنده خدمات جامع در حوزه فناوری اطلاعات شامل طراحی و توسعه وب‌سایت، برنامه‌نویسی سفارشی، طراحی افزونه و قالب وردپرس، توسعه اپلیکیشن، سئو و بهینه‌سازی، مشاوره فنی و پشتیبانی حرفه‌ای. تیم ما با تجربه در پروژه‌های متنوع، راهکارهای فنی پیشرفته و اختصاصی را برای کسب‌وکارها ارائه می‌دهد.',
@@ -89,6 +89,7 @@ class AI_Chatbot_Plugin {
         wp_localize_script('novin-chatbot-frontend-script', 'ai_chatbot_ajax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'summarize_nonce' => wp_create_nonce('summarize_chat_nonce'),
+            'chat_message_nonce' => wp_create_nonce('ai_chatbot_message_nonce_action'),
             'rest_api_url' => esc_url_raw(rest_url('chatbot/v1/submit')),
             'rest_api_nonce' => wp_create_nonce('wp_rest'),
             'initial_chat_history' => $chat_history_for_js, // برای ارسال اولیه تاریخچه به JS
@@ -121,9 +122,9 @@ class AI_Chatbot_Plugin {
     }
     
     public function handle_chatbot_message() {
-        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ai_chatbot_nonce')) {
-             // Nonce اصلی برای پیام‌های چت، اگر در localize ارسال نشده باید اضافه شود
-             // در نسخه فعلی شما nonce ارسال نمی‌شد، بهتر است اضافه شود. برای سادگی فعلا رد می‌کنم.
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ai_chatbot_message_nonce_action')) {
+            wp_send_json_error(array('message' => __('Invalid nonce or action.', 'novinweb-ai-chatbot')));
+            return;
         }
         
         $user_message = isset($_POST['message']) ? sanitize_text_field(wp_unslash($_POST['message'])) : '';
@@ -695,7 +696,7 @@ class AI_Chatbot_Plugin {
         register_rest_route('chatbot/v1', '/submit', array(
             'methods' => WP_REST_Server::CREATABLE, // POST
             'callback' => array($this, 'handle_chat_submission_endpoint'),
-            'permission_callback' => '__return_true', // برای تست. در محیط واقعی باید امن شود.
+            'permission_callback' => array($this, 'verify_chat_submission_nonce'),
              'args' => array( // تعریف پارامترهای مورد انتظار
                 'summary' => array(
                     'required' => true,
@@ -720,6 +721,18 @@ class AI_Chatbot_Plugin {
                 ),
             ),
         ));
+    }
+
+    public function verify_chat_submission_nonce(WP_REST_Request $request) {
+        $nonce = $request->get_header('X-WP-Nonce');
+        if (!wp_verify_nonce($nonce, 'wp_rest')) {
+            return new WP_Error(
+                'rest_forbidden',
+                esc_html__('Nonce verification failed. Invalid or missing X-WP-Nonce header.', 'novinweb-ai-chatbot'),
+                array('status' => 403)
+            );
+        }
+        return true;
     }
 
     public function handle_chat_submission_endpoint(WP_REST_Request $request) {

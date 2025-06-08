@@ -1,0 +1,307 @@
+/* Scroll CTA styles - Glassmorphism Theme */
+#scroll-cta {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 340px; /* Slightly increased max-width */
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari compatibility */
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px 15px;
+    color: #2c3e50; /* Darker text for light theme */
+    direction: rtl;
+    font-family: 'IRANSans', Tahoma, sans-serif; /* Assuming IRANSans is available */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+#scroll-cta.active {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.scroll-cta__content {
+    position: relative;
+}
+
+.scroll-cta__close {
+    position: absolute;
+    top: -10px; /* Adjusted for better placement */
+    left: -10px; /* Adjusted for RTL */
+    background: rgba(0,0,0,0.1);
+    color: #333;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.scroll-cta__close:hover {
+    background: rgba(0,0,0,0.2);
+    transform: rotate(90deg);
+}
+
+.scroll-cta__badge {
+    background: #e74c3c;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+    position: absolute;
+    top: -15px; /* Adjusted for padding */
+    right: 15px; /* For RTL, this places it on the "start" side */
+    animation: pulse-light 2s infinite;
+}
+
+.scroll-cta__header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.scroll-cta__header h2 {
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.scroll-cta__header .subtitle {
+    font-size: 0.9rem;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.scroll-cta__header .highlight {
+    background: #f1c40f;
+    color: #000;
+    padding: 2px 8px; /* Increased padding */
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.scroll-cta__features {
+    background: rgba(0, 0, 0, 0.03); /* Subtle background */
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-left: 3px solid rgba(231, 76, 60, 0.5); /* Accent color */
+}
+
+.scroll-cta__features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scroll-cta__features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.scroll-cta__features li:last-child {
+    margin-bottom: 0;
+}
+
+.scroll-cta__features .icon {
+    margin-left: 8px; /* For RTL, this is margin-end */
+    font-size: 1.1rem;
+    color: #e74c3c; /* Accent color */
+}
+
+.scroll-cta__process p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(0,0,0,0.02);
+    border-radius: 6px;
+}
+
+.scroll-cta__timer-compact {
+    margin-bottom: 20px;
+}
+
+.scroll-cta__timer-compact .countdown {
+    display: flex;
+    justify-content: space-between; /* Changed from space-around for potentially tighter packing */
+    align-items: center;
+    gap: 5px; /* Added gap for spacing between items */
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.scroll-cta__timer-compact .countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1); /* Darker boxes for timer items */
+    color: #2c3e50; /* Ensure text is readable */
+    padding: 8px 10px; /* Slightly reduced padding */
+    border-radius: 6px;
+    min-width: 45px; /* Slightly reduced min-width */
+}
+
+.scroll-cta__timer-compact .countdown-item span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.scroll-cta__timer-compact .countdown-item .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #34495e; /* Slightly muted label color */
+}
+
+.scroll-cta__button {
+    text-align: center;
+}
+
+.scroll-cta__button a.cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.scroll-cta__button a.cta-button:hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse-light {
+    0% {
+        box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+    }
+    50% {
+        box-shadow: 0 2px 12px rgba(231, 76, 60, 0.5);
+    }
+    100% {
+        box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #scroll-cta {
+        max-width: 320px; /* Adjust for tablets */
+        padding: 15px 10px;
+    }
+
+    .scroll-cta__header h2 {
+        font-size: 1.2rem;
+    }
+
+    .scroll-cta__header .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .scroll-cta__features li {
+        font-size: 0.85rem;
+    }
+
+    .scroll-cta__process p {
+        font-size: 0.8rem;
+    }
+
+    .scroll-cta__timer-compact .countdown-item span {
+        font-size: 1.3rem;
+    }
+    .scroll-cta__timer-compact .countdown-item .label {
+        font-size: 0.6rem;
+    }
+
+    .scroll-cta__button a.cta-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #scroll-cta {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto; /* Full width minus margins */
+        max-width: none; /* Override max-width */
+        padding: 15px;
+    }
+
+    .scroll-cta__header h2 {
+        font-size: 1.1rem;
+    }
+
+    .scroll-cta__badge {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+        top: -10px;
+    }
+
+    .scroll-cta__close {
+        top: -5px;
+        left: -5px; /* RTL */
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 18px;
+    }
+
+    .scroll-cta__timer-compact .countdown {
+        /* flex-wrap: wrap; */ /* Removing wrap for now, to see if they fit */
+        gap: 3px; /* Tighter gap for mobile */
+    }
+
+    .scroll-cta__timer-compact .countdown-item {
+        padding: 5px 6px; /* Further reduce padding */
+        min-width: auto; /* Allow them to be smaller */
+        flex-basis: 0; /* Allow flex items to shrink if needed */
+        flex-grow: 1; /* Allow flex items to grow to fill space */
+        margin: 2px;
+    }
+
+    .scroll-cta__timer-compact .countdown-item span {
+        font-size: 1.1rem;
+    }
+    .scroll-cta__timer-compact .countdown-item .label {
+        font-size: 0.55rem;
+    }
+}

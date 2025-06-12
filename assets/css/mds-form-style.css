@@ -1,0 +1,123 @@
+/* MDS Form Styles */
+/* Styles for the multi-step form container */
+.mds-form-container {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 700px; /* Adjust as needed */
+    background-color: #f9f9f9;
+}
+
+/* Progress indicator styles */
+.mds-form-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.mds-step-indicator {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #666;
+    text-align: center;
+    flex-grow: 1; /* Each step indicator takes equal width */
+    margin: 0 5px; /* Spacing between indicators */
+    font-size: 0.9em;
+}
+
+.mds-step-indicator.active {
+    background-color: #0073aa; /* WordPress blue */
+    color: #fff;
+    border-color: #0073aa;
+    font-weight: bold;
+}
+
+.mds-step-indicator.completed {
+    background-color: #d4edda; /* Light green for completed */
+    color: #155724; /* Dark green text */
+    border-color: #c3e6cb;
+}
+
+/* Form steps container */
+.mds-form-steps {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    min-height: 150px; /* Give some space for content */
+}
+
+.mds-form-steps h4 {
+    margin-top: 0;
+    color: #333;
+}
+
+/* Navigation buttons */
+.mds-form-navigation {
+    display: flex;
+    justify-content: space-between; /* Puts Prev on left, Next/Submit on right */
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.mds-form-navigation button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.mds-prev-step {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.mds-prev-step:hover {
+    background-color: #e0e0e0;
+}
+
+.mds-next-step,
+.mds-submit-form {
+    background-color: #0073aa; /* WordPress blue */
+    color: #fff;
+}
+
+.mds-next-step:hover,
+.mds-submit-form:hover {
+    background-color: #005a87;
+}
+
+/* Basic styling for form elements (can be expanded) */
+.mds-form-steps label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.mds-form-steps input[type="text"],
+.mds-form-steps input[type="email"],
+.mds-form-steps input[type="tel"],
+.mds-form-steps textarea,
+.mds-form-steps select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.mds-form-steps textarea {
+    min-height: 80px;
+}
+
+/* Hidden class for future use if needed for dynamically showing/hiding steps via JS */
+.mds-form-step-content.hidden {
+    display: none;
+}

@@ -1,197 +1,3 @@
-diff --git a/src/app/en/page.tsx b/src/app/en/page.tsx
-index 332df73..6eb2e2a 100644
---- a/src/app/en/page.tsx
-+++ b/src/app/en/page.tsx
-@@ -25,8 +25,13 @@ import EnContactForm from "@/components/EnContactForm";
- import EnAutomationCheckCta from "@/components/EnAutomationCheckCta";
- import HeroActions from "@/components/HeroActions";
- import HeroBackdrop from "@/components/HeroBackdrop";
--import { PROJECTS } from "@/data/projects";
--import { PROJECTS_EN } from "@/data/projects.en";
-+import { PROJECTS, type Project } from "@/data/projects";
-+import { PROJECTS_EN, CATEGORY_LABELS_EN } from "@/data/projects.en";
-+
-+/** Featured home-page projects — same data as the work page */
-+const HOME_CASES: Project[] = ["choob-wood-studio", "abrsorati-store", "hamrah-ai-assistant"]
-+  .map((slug) => PROJECTS.find((p) => p.slug === slug))
-+  .filter((p): p is Project => Boolean(p));
- 
- const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.webnovo.ir";
- 
-@@ -590,9 +595,9 @@ export default function EnHome() {
-                 Ideas and processes that became real systems
-               </h2>
-               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
--                Subscription sales bot with Zarinpal, automatic trading signal execution, management
--                dashboards, Torob & Digikala price monitoring bots and AI bank-receipt
--                verification — all delivered and running.
-+                A handmade-woodwork store with a full admin panel, an online store with order
-+                tracking, a three-channel booking platform, an AI assistant with long-term memory and
-+                custom WordPress plugins — each one backed by a live link or public source.
-               </p>
-             </div>
-             <Link
-@@ -668,119 +673,51 @@ export default function EnHome() {
-           </div>
- 
-           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
--            <div className="flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
--              <div className="space-y-4">
--                <div className="flex items-center justify-between">
--                  <span className="rounded-full border border-cyan-800/50 bg-cyan-950 px-2.5 py-1 text-xs font-bold text-cyan-300">
--                    Online store
--                  </span>
--                  <span className="text-xs text-slate-400">Pars Trading Store</span>
--                </div>
--                <h3 className="text-base font-bold text-white sm:text-lg">
--                  Automated competitor price tracking on Torob &amp; seller panel updates
--                </h3>
--                <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
--                  <strong>Problem:</strong> the sales team updated prices manually and lagged hours
--                  behind competitor changes, while out-of-stock listings occasionally stayed active.
--                  <br />
--                  <strong>Solution:</strong> a scheduled bot monitored competitor prices on Torob and
--                  applied margin-bounded updates directly in the seller panel.
--                </p>
--              </div>
--
--              <div className="space-y-2 border-t border-slate-800 pt-4">
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Panel price updates:</span>
--                  <span className="font-bold text-emerald-400">Automated by margin formula</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Reaction to price changes:</span>
--                  <span className="font-bold text-cyan-400">Hours → seconds</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Daily manual monitoring:</span>
--                  <span className="font-bold text-white">Handled by scheduled bot</span>
--                </div>
--              </div>
--            </div>
--
--            <div className="flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
--              <div className="space-y-4">
--                <div className="flex items-center justify-between">
--                  <span className="rounded-full border border-blue-800/50 bg-blue-950 px-2.5 py-1 text-xs font-bold text-blue-300">
--                    Distribution
--                  </span>
--                  <span className="text-xs text-slate-400">Zarrin Nationwide Distribution</span>
--                </div>
--                <h3 className="text-base font-bold text-white sm:text-lg">
--                  Direct sync from online orders to Sepidar invoices &amp; warehouse dispatch
--                </h3>
--                <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
--                  <strong>Problem:</strong> wholesale orders were re-typed manually into Sepidar each
--                  day, consuming accounting hours and causing item-entry mistakes.
--                  <br />
--                  <strong>Solution:</strong> online orders flow straight into Sepidar invoices and
--                  warehouse dispatches, with automatic stock updates and tracking SMS.
--                </p>
--              </div>
--
--              <div className="space-y-2 border-t border-slate-800 pt-4">
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Manual invoice typing:</span>
--                  <span className="font-bold text-emerald-400">Eliminated via direct integration</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Invoice &amp; dispatch issuing:</span>
--                  <span className="font-bold text-cyan-400">Automated on order intake</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Partner notifications:</span>
--                  <span className="font-bold text-white">Automatic tracking SMS</span>
--                </div>
--              </div>
--            </div>
--
--            <div className="flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
--              <div className="space-y-4">
--                <div className="flex items-center justify-between">
--                  <span className="rounded-full border border-indigo-800/50 bg-indigo-950 px-2.5 py-1 text-xs font-bold text-indigo-300">
--                    Education &amp; services
--                  </span>
--                  <span className="text-xs text-slate-400">Noavaran Academy</span>
--                </div>
--                <h3 className="text-base font-bold text-white sm:text-lg">
--                  Telegram &amp; Bale bot with bank-receipt verification and enrollment sync
--                </h3>
--                <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
--                  <strong>Problem:</strong> during promotional campaigns heavy waves of card-to-card
--                  receipts delayed course access for hours and complicated fake-slip detection.
--                  <br />
--                  <strong>Solution:</strong> a bot read receipts via Persian OCR, verified payments
--                  and activated course access within seconds while routing suspicious slips to review.
--                </p>
--              </div>
-+            {HOME_CASES.map((p) => {
-+              const en = PROJECTS_EN[p.slug];
-+              if (!en) return null;
-+              return (
-+                <Link
-+                  key={p.slug}
-+                  href={`/en/projects/${p.slug}`}
-+                  className="group flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 transition-colors hover:border-cyan-700/60 sm:p-8"
-+                >
-+                  <div className="space-y-4">
-+                    <div className="flex items-center justify-between gap-2">
-+                      <span className="shrink-0 rounded-full border border-cyan-800/50 bg-cyan-950 px-2.5 py-1 text-xs font-bold text-cyan-300">
-+                        {CATEGORY_LABELS_EN[p.category] ?? p.category}
-+                      </span>
-+                      <span className="truncate text-xs text-slate-400">{p.client}</span>
-+                    </div>
-+                    <h3 className="text-base font-bold text-white transition-colors group-hover:text-cyan-300 sm:text-lg">
-+                      {en.title}
-+                    </h3>
-+                    <p className="line-clamp-4 text-xs leading-relaxed text-slate-300 sm:text-sm">
-+                      <strong>Problem:</strong> {en.challenge}
-+                    </p>
-+                  </div>
- 
--              <div className="space-y-2 border-t border-slate-800 pt-4">
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Receipt intake &amp; verification:</span>
--                  <span className="font-bold text-emerald-400">Automated 24/7</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Duplicate or suspicious slips:</span>
--                  <span className="font-bold text-amber-400">Auto-checked + review queue</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">Course access activation:</span>
--                  <span className="font-bold text-white">Automated after payment check</span>
--                </div>
--              </div>
--            </div>
-+                  <div className="space-y-2 border-t border-slate-800 pt-4">
-+                    {en.results.slice(0, 3).map((r) => (
-+                      <div key={r.label} className="flex items-center justify-between gap-3 text-xs">
-+                        <span className="text-slate-400">{r.label}:</span>
-+                        <span className="text-right font-bold text-cyan-400">{r.value}</span>
-+                      </div>
-+                    ))}
-+                    <div className="flex items-center justify-between gap-3 pt-1 text-xs font-semibold text-cyan-400">
-+                      <span>Open the full project file</span>
-+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-+                    </div>
-+                  </div>
-+                </Link>
-+              );
-+            })}
-           </div>
- 
-           <p className="mt-6 text-[11px] leading-relaxed text-slate-500">
--            The scenarios above represent operational automation setups; exact outcomes for each
--            engagement depend on your infrastructure, target-platform rules and the written scope of
--            that project.
-+            All three projects above are real and in use, and each project file links to its live demo or
-+            public repository; exact outcomes for a new engagement depend on your infrastructure,
-+            target-platform rules and the written scope of that project.
-           </p>
-         </div>
-       </section>
 diff --git a/src/app/en/projects/[slug]/page.tsx b/src/app/en/projects/[slug]/page.tsx
 index 943cc64..2f5874f 100644
 --- a/src/app/en/projects/[slug]/page.tsx
@@ -238,274 +44,24 @@ index 943cc64..2f5874f 100644
          {fa.serviceLinks && fa.serviceLinks.length > 0 && (
            <section className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
              <h2 className="text-sm font-bold text-white sm:text-base">
-diff --git a/src/app/en/projects/page.tsx b/src/app/en/projects/page.tsx
-index 97a4aba..f0f35ec 100644
---- a/src/app/en/projects/page.tsx
-+++ b/src/app/en/projects/page.tsx
-@@ -12,7 +12,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.webnovo.ir";
- export const metadata: Metadata = {
-   title: "Real Delivered Work | Telegram Bots, Dashboards & Automation — WebNovo",
-   description:
--    "WebNovo portfolio and in-house products: subscription sales bot with Zarinpal, automatic signal execution, CRM with UID verification, FastAPI & Next.js dashboards, Digikala & Torob automation, Persian OCR and Novo, an offline Android music player.",
-+    "Real WebNovo projects: a woodworking studio storefront and admin panel, an online store with order tracking, a Telegram + web + Android booking platform, an AI assistant with long-term memory, a desktop file organizer, a Telegram member export bot and custom WordPress plugins — every project with a live link or public source.",
-   alternates: { canonical: `${SITE_URL}/en/projects` },
- };
- 
-@@ -33,12 +33,11 @@ export default function EnProjectsPage() {
-             These are ideas that became real systems
-           </h1>
-           <p className="text-sm leading-relaxed text-slate-300 sm:text-base">
--            Every project started from a real idea or opportunity — from Telegram and Bale bots to
--            management dashboards, connections to the <span className="font-mono-num">LBank</span>{" "}
--            and <span className="font-mono-num">XT</span> exchanges, the Zarinpal payment gateway
--            and the Digikala and Torob marketplaces. In-house products like “Novo”, an offline
--            Android music player, are on this list too. For each project you see the original
--            problem, the technical solution and the result.
-+            Every project started from a real need: a workshop storefront, an online store, a
-+            booking platform, an AI assistant, a desktop app and custom WordPress plugins. For each
-+            project you see the original problem, the engineering decisions and the outcome — plus a{" "}
-+            <span className="font-semibold text-slate-200">live demo or public repository</span> so
-+            you can verify it yourself.
-           </p>
-         </div>
- 
-@@ -81,12 +80,34 @@ export default function EnProjectsPage() {
-                     </span>
-                   ))}
-                 </div>
--                <Link
-+<div className="flex flex-wrap items-center gap-3">
-+                                <Link
-                   href={`/en/projects/${featured.slug}`}
-                   className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 px-5 py-2.5 text-sm font-bold text-white transition-all hover:from-cyan-400 hover:to-indigo-500"
-                 >
-                   Read the full case <ArrowRight className="h-4 w-4" />
-                 </Link>
-+                {featured.liveUrl && (
-+                  <a
-+                    href={featured.liveUrl}
-+                    target="_blank"
-+                    rel="noopener noreferrer"
-+                    className="inline-flex items-center gap-2 rounded-xl border border-emerald-800/60 bg-emerald-950/50 px-4 py-2.5 text-xs font-semibold text-emerald-300 transition-colors hover:border-emerald-500/70"
-+                  >
-+                    {featured.liveLabel ?? "Live demo"}
-+                  </a>
-+                )}
-+                {featured.repoUrl && (
-+                  <a
-+                    href={featured.repoUrl}
-+                    target="_blank"
-+                    rel="noopener noreferrer"
-+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 px-4 py-2.5 font-mono-num text-xs text-slate-300 transition-colors hover:border-cyan-700/70 hover:text-cyan-300"
-+                  >
-+                    {featured.repo}
-+                  </a>
-+                )}
-+              </div>
-               </div>
-             </div>
-           </section>
-diff --git a/src/app/page.tsx b/src/app/page.tsx
-index ee26a51..a352bb6 100644
---- a/src/app/page.tsx
-+++ b/src/app/page.tsx
-@@ -25,7 +25,23 @@ import AutomationCheckCta from "@/components/AutomationCheckCta";
- import HeroActions from "@/components/HeroActions";
- import HeroBackdrop from "@/components/HeroBackdrop";
- import Image from "next/image";
--import { PROJECTS } from "@/data/projects";
-+import { PROJECTS, type Project } from "@/data/projects";
-+
-+/** پروژه‌های شاخص صفحه اصلی — همان داده‌ی صفحه نمونه‌کارها */
-+const HOME_CASES: Project[] = ["choob-wood-studio", "abrsorati-store", "hamrah-ai-assistant"]
-+  .map((slug) => PROJECTS.find((p) => p.slug === slug))
-+  .filter((p): p is Project => Boolean(p));
-+
-+const HOME_CASE_LABELS: Record<string, string> = {
-+  web: "وب‌سایت",
-+  ecommerce: "فروشگاه",
-+  bots: "ربات",
-+  ai: "هوش مصنوعی",
-+  desktop: "اپلیکیشن",
-+  android: "اندروید",
-+  integration: "یکپارچه‌سازی",
-+  dashboards: "داشبورد",
-+};
- 
- const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.webnovo.ir";
- 
-@@ -616,8 +632,9 @@ export default function HomePage() {
-                 ایده‌ها و فرایندهایی که به سیستم واقعی تبدیل شدند
-               </h2>
-               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
--                ربات فروش اشتراک با زرین‌پال، اجرای خودکار سیگنال ترید، داشبوردهای مدیریتی، ربات رصد قیمت
--                ترب و دیجی‌کالا، و تأیید فیش بانکی با هوش مصنوعی — همه تحویل‌شده و در حال کار.
-+                سایت فروش دست‌سازه‌های چوبی با پنل مدیریت، فروشگاه اینترنتی با ثبت و پیگیری سفارش،
-+                سامانه نوبت‌دهی سه‌کاناله، دستیار هوشمند با حافظه بلندمدت و افزونه‌های اختصاصی وردپرس —
-+                هر کدام با لینک دمو یا کد قابل بررسی.
-               </p>
-             </div>
-             <Link
-@@ -691,121 +708,46 @@ export default function HomePage() {
-           </div>
- 
-           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
--            {/* کیس ۱ */}
--            <div className="flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
--              <div className="space-y-4">
--                <div className="flex items-center justify-between">
--                  <span className="rounded-full border border-cyan-800/50 bg-cyan-950 px-2.5 py-1 text-xs font-bold text-cyan-300">
--                    فروشگاه اینترنتی
--                  </span>
--                  <span className="text-xs text-slate-400">فروشگاه بازرگانی پارس</span>
--                </div>
--                <h3 className="text-base font-bold text-white sm:text-lg">
--                  رصد خودکار قیمت رقبا در ترب و به‌روزرسانی پنل فروشندگان
--                </h3>
--                <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
--                  <strong>مسئله:</strong> تیم فروش قیمت‌ها را دستی تغییر می‌داد و همیشه دیرتر از رقیب
--                  به‌روز می‌شد؛ فروش کالای ناموجود هم پیش می‌آمد.
--                  <br />
--                  <strong>راه‌حل:</strong> ربات خودکار قیمت رقبا را در ترب پایش کرد و قیمت‌ها را با فرمول سود
--                  در پنل فروشندگان اعمال کرد.
--                </p>
--              </div>
--
--              <div className="space-y-2 border-t border-slate-800 pt-4">
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">به‌روزرسانی قیمت پنل:</span>
--                  <span className="font-bold text-emerald-400">خودکار بر اساس فرمول سود</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">زمان واکنش به تغییر قیمت:</span>
--                  <span className="font-bold text-cyan-400">از ساعت‌ها به چند ثانیه</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">پایش دستی روزانه:</span>
--                  <span className="font-bold text-white">سپرده‌شده به ربات زمان‌بندی‌شده</span>
--                </div>
--              </div>
--            </div>
--
--            {/* کیس ۲ */}
--            <div className="flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
--              <div className="space-y-4">
--                <div className="flex items-center justify-between">
--                  <span className="rounded-full border border-blue-800/50 bg-blue-950 px-2.5 py-1 text-xs font-bold text-blue-300">
--                    پخش و توزیع
--                  </span>
--                  <span className="text-xs text-slate-400">پخش سراسری زرین</span>
--                </div>
--                <h3 className="text-base font-bold text-white sm:text-lg">
--                  اتصال خودکار سفارش‌های سایت به سپیدار و حواله انبار
--                </h3>
--                <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
--                  <strong>مسئله:</strong> سفارش‌های همکاران هر روز دستی در سپیدار ثبت می‌شد و ساعت‌ها وقت
--                  حسابداری را می‌گرفت؛ خطای ثبت فاکتور هم پیش می‌آمد.
--                  <br />
--                  <strong>راه‌حل:</strong> سفارش سایت مستقیم به فاکتور سپیدار و حواله انبار وصل شد؛ کسر
--                  موجودی و پیامک رهگیری هم خودکار شد.
--                </p>
--              </div>
--
--              <div className="space-y-2 border-t border-slate-800 pt-4">
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">ثبت دستی اقلام فاکتور:</span>
--                  <span className="font-bold text-emerald-400">حذف تایپ دستی با اتصال مستقیم</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">صدور فاکتور و حواله انبار:</span>
--                  <span className="font-bold text-cyan-400">خودکار پس از ثبت سفارش</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">اطلاع‌رسانی به همکاران:</span>
--                  <span className="font-bold text-white">ارسال خودکار کد رهگیری</span>
--                </div>
--              </div>
--            </div>
--
--            {/* کیس ۳ */}
--            <div className="flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
--              <div className="space-y-4">
--                <div className="flex items-center justify-between">
--                  <span className="rounded-full border border-indigo-800/50 bg-indigo-950 px-2.5 py-1 text-xs font-bold text-indigo-300">
--                    آموزش و خدمات
--                  </span>
--                  <span className="text-xs text-slate-400">آکادمی نوآوران</span>
-+            {HOME_CASES.map((p) => (
-+              <Link
-+                key={p.slug}
-+                href={`/projects/${p.slug}`}
-+                className="group flex flex-col justify-between space-y-6 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 transition-colors hover:border-cyan-700/60 sm:p-8"
-+              >
-+                <div className="space-y-4">
-+                  <div className="flex items-center justify-between gap-2">
-+                    <span className="shrink-0 rounded-full border border-cyan-800/50 bg-cyan-950 px-2.5 py-1 text-xs font-bold text-cyan-300">
-+                      {HOME_CASE_LABELS[p.category]}
-+                    </span>
-+                    <span className="truncate text-xs text-slate-400">{p.client}</span>
-+                  </div>
-+                  <h3 className="text-base font-bold text-white transition-colors group-hover:text-cyan-300 sm:text-lg">
-+                    {p.title}
-+                  </h3>
-+                  <p className="line-clamp-4 text-xs leading-relaxed text-slate-300 sm:text-sm">
-+                    <strong>مسئله:</strong> {p.challenge}
-+                  </p>
-                 </div>
--                <h3 className="text-base font-bold text-white sm:text-lg">
--                  ربات تلگرام و بله با تأیید فیش بانکی و ثبت در پنل فروش
--                </h3>
--                <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
--                  <strong>مسئله:</strong> در ایام جشنواره انبوه رسید کارت‌به‌کارت می‌رسید و باز کردن دسترسی
--                  دوره‌ها ساعت‌ها طول می‌کشید؛ تشخیص رسید جعلی هم دشوار بود.
--                  <br />
--                  <strong>راه‌حل:</strong> ربات فیش را با موتور فارسی خواند، پرداخت را تأیید و دسترسی را در
--                  چند ثانیه فعال کرد.
--                </p>
--              </div>
- 
--              <div className="space-y-2 border-t border-slate-800 pt-4">
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">دریافت و بررسی رسید:</span>
--                  <span className="font-bold text-emerald-400">خودکار و شبانه‌روزی</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">فیش‌های تکراری و مشکوک:</span>
--                  <span className="font-bold text-amber-400">کنترل خودکار + صف بازبینی</span>
--                </div>
--                <div className="flex items-center justify-between text-xs">
--                  <span className="text-slate-400">فعال‌سازی دسترسی دوره:</span>
--                  <span className="font-bold text-white">خودکار پس از تأیید پرداخت</span>
-+                <div className="space-y-2 border-t border-slate-800 pt-4">
-+                  {p.results.slice(0, 3).map((r) => (
-+                    <div key={r.label} className="flex items-center justify-between gap-3 text-xs">
-+                      <span className="text-slate-400">{r.label}:</span>
-+                      <span className="text-left font-bold text-cyan-400">{r.value}</span>
-+                    </div>
-+                  ))}
-+                  <div className="flex items-center justify-between gap-3 pt-1 text-xs font-semibold text-cyan-400">
-+                    <span>پرونده کامل پروژه</span>
-+                    <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
-+                  </div>
-                 </div>
--              </div>
--            </div>
-+              </Link>
-+            ))}
-           </div>
- 
-           <p className="mt-6 text-[11px] leading-relaxed text-slate-500">
--            سناریوهای بالا نمونه‌های اجرایی از پیاده‌سازی اتوماسیون هستند؛ خروجی دقیق هر پروژه به زیرساخت، قوانین
--            پلتفرم‌های مقصد و دامنهٔ توافق‌شده در پروپوزال همان پروژه بستگی دارد.
-+            هر سه پروژه بالا واقعی و در حال استفاده‌اند و لینک دمو یا مخزن کدشان در پرونده‌ی هر پروژه آمده است؛
-+            خروجی هر پروژه‌ی تازه به زیرساخت، قوانین پلتفرم‌های مقصد و دامنهٔ توافق‌شده در پروپوزال همان پروژه بستگی دارد.
-           </p>
-         </div>
-       </section>
 diff --git a/src/app/projects/[slug]/page.tsx b/src/app/projects/[slug]/page.tsx
-index d12a64c..2b0bb9b 100644
+index d12a64c..e92bf5a 100644
 --- a/src/app/projects/[slug]/page.tsx
 +++ b/src/app/projects/[slug]/page.tsx
+@@ -9,12 +9,12 @@ import {
+   Calendar,
+   CheckCircle2,
+   Code2,
++  ExternalLink,
+   Send,
+   Target,
+   Wrench,
+   TrendingUp,
+   Building2,
+-  ExternalLink,
+ } from "lucide-react";
+ import { PROJECTS, getProject } from "@/data/projects";
+ import { SITE } from "@/data/site";
 @@ -101,9 +101,24 @@ export default async function ProjectPage({ params }: Params) {
                </span>
              )}
@@ -553,814 +109,48 @@ index d12a64c..2b0bb9b 100644
                        sizes="(max-width: 1024px) 50vw, 320px"
                        className="w-full h-auto"
                      />
-diff --git a/src/app/projects/page.tsx b/src/app/projects/page.tsx
-index 604bbfe..d4f0758 100644
---- a/src/app/projects/page.tsx
-+++ b/src/app/projects/page.tsx
-@@ -10,7 +10,7 @@ export const metadata: Metadata = {
-   alternates: { canonical: "/projects" },
-   title: "نمونه‌کارهای واقعی | ربات‌های تلگرام، داشبورد و اتوماسیون — نوین وب",
-   description:
--    "نمونه‌کارها و محصولات داخلی نوین وب: ربات فروش اشتراک با زرین‌پال، اجرای خودکار سیگنال، CRM و اعتبارسنجی UID، داشبوردهای FastAPI و Next.js، اتوماسیون دیجی‌کالا و ترب، OCR فارسی و نوو، پخش‌کنندهٔ موسیقی آفلاین اندروید.",
-+    "نمونه‌کارهای واقعی نوین وب: سایت و پنل مدیریت کارگاه چوب، فروشگاه اینترنتی با ثبت و پیگیری سفارش، سامانه نوبت‌دهی تلگرام و وب و اندروید، دستیار هوشمند با حافظه بلندمدت، اپلیکیشن دسکتاپ سازمان‌ده فایل، ربات استخراج اعضای کانال تلگرام و افزونه‌های اختصاصی وردپرس — هر پروژه با لینک دمو یا کد.",
- };
- 
- export default function ProjectsPage() {
-@@ -29,11 +29,10 @@ export default function ProjectsPage() {
-             این‌ها ایده‌هایی هستند که تبدیل به سیستم واقعی شده‌اند
-           </h1>
-           <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
--            هر نمونه‌کار از یک ایده یا فرصت واقعی شروع شده؛ از ربات‌های تلگرام و بله تا داشبوردهای مدیریتی،
--            اتصال به صرافی‌های <span className="font-mono-num">LBank</span> و{" "}
--            <span className="font-mono-num">XT</span>، درگاه زرین‌پال و مارکت‌پلیس‌های دیجی‌کالا و ترب.
--            محصولات داخلی مثل «نوو»، پخش‌کنندهٔ موسیقی آفلاین اندروید، هم در همین فهرست آمده‌اند.
--            برای هر پروژه، مسئلهٔ اولیه، راه‌حل فنی و نتیجهٔ کار را می‌بینید.
-+            هر نمونه‌کار از یک نیاز واقعی شروع شده: از فروشگاه و کارگاه دست‌ساز تا سامانه نوبت‌دهی،
-+            فروشگاه اینترنتی، دستیار هوشمند، اپلیکیشن دسکتاپ و افزونه‌های وردپرس. برای هر پروژه، مسئلهٔ
-+            اولیه، تصمیم‌های فنی، خروجی کار و <span className="font-semibold text-slate-200">لینک دموی
-+            زنده یا مخزن کد</span> آمده است تا خودتان راستی‌آزمایی کنید.
-           </p>
-         </div>
- 
-@@ -75,12 +74,34 @@ export default function ProjectsPage() {
-                   </span>
-                 ))}
-               </div>
--              <Link
--                href={`/projects/${featured.slug}`}
--                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white text-sm font-bold hover:from-cyan-400 hover:to-indigo-500 transition-all"
--              >
--                مطالعه کامل این پروژه <ArrowLeft className="w-4 h-4" />
--              </Link>
-+              <div className="flex flex-wrap items-center gap-3">
-+                <Link
-+                  href={`/projects/${featured.slug}`}
-+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white text-sm font-bold hover:from-cyan-400 hover:to-indigo-500 transition-all"
-+                >
-+                  مطالعه کامل این پروژه <ArrowLeft className="w-4 h-4" />
-+                </Link>
-+                {featured.liveUrl && (
-+                  <a
-+                    href={featured.liveUrl}
-+                    target="_blank"
-+                    rel="noopener noreferrer"
-+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/50 text-emerald-300 text-xs font-semibold hover:border-emerald-500/70 transition-colors"
-+                  >
-+                    {featured.liveLabel ?? "دموی زنده"}
-+                  </a>
-+                )}
-+                {featured.repoUrl && (
-+                  <a
-+                    href={featured.repoUrl}
-+                    target="_blank"
-+                    rel="noopener noreferrer"
-+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900/80 text-slate-300 text-xs font-mono-num hover:border-cyan-700/70 hover:text-cyan-300 transition-colors"
-+                  >
-+                    {featured.repo}
-+                  </a>
-+                )}
-+              </div>
-             </div>
-           </div>
-         </section>
-diff --git a/src/components/CaseStudiesContent.tsx b/src/components/CaseStudiesContent.tsx
-index 94e079d..4fdf79f 100644
---- a/src/components/CaseStudiesContent.tsx
-+++ b/src/components/CaseStudiesContent.tsx
-@@ -2,110 +2,22 @@
- 
- import { useState } from "react";
- import Link from "next/link";
--import {
--  TrendingUp,
--  Database,
--  Code2,
--  Sparkles,
--  ArrowLeft,
--  CheckCircle2,
--  Building2,
--  Clock,
--  Coins,
--  ShieldCheck,
--  Award,
--} from "lucide-react";
-+import { ArrowLeft, Award, CheckCircle2, Code2, ExternalLink } from "lucide-react";
-+import { PROJECTS, type Project } from "@/data/projects";
- 
- const CATEGORIES = [
-   { id: "all", label: "همه پروژه‌ها" },
--  { id: "marketplace", label: "مارکت‌پلیس و ترب" },
--  { id: "accounting", label: "سپیدار، هلو و CRM" },
--  { id: "messengers", label: "تلگرام، بله و ایتا" },
--  { id: "scraping_ai", label: "اسکرپینگ و هوش مصنوعی" },
-+  { id: "web", label: "وب‌سایت و فروشگاه" },
-+  { id: "bots", label: "ربات و پیام‌رسان" },
-+  { id: "ai", label: "هوش مصنوعی" },
- ];
- 
--const CASE_STUDIES = [
--  {
--    id: "auto-parts-torob",
--    category: "marketplace",
--    client: "بازرگانی قطعات خودرو پیشتاز",
--    field: "پخش و خرده‌فروشی قطعات یدکی خودرو در ترب و دیجی‌کالا",
--    challenge:
--      "تیم فروش هر روز ساعت‌ها قیمت طیف گسترده‌ای از قطعات را در ترب دستی چک می‌کرد و در پنل فروشندگان دیجی‌کالا و سایت اختصاصی تغییر می‌داد. با هر تغییر قیمت رقیب، تا رسیدن نوبت آپدیت چند ساعت طول می‌کشید و بای‌باکس را از دست می‌دادند. علاوه بر این، چندین بار کالایی که در انبار تمام شده بود به فروش رفت و منجر به جریمه دیجی‌کالا شد.",
--    solution:
--      "نوین وب ربات مانیتورینگ اختصاصی روی پایتون و سلنیوم با آی‌پی‌های چرخشی داخل کشور توسعه داد. ربات به‌صورت دوره‌ای قیمت رقبا در ترب را اسکرپ کرده، با جدول سود مجاز در اکسل انبار تطبیق داده و به صورت اتوماتیک قیمت جدید را در وب‌سرویس فروشندگان دیجی‌کالا و سایت ووکامرس ثبت می‌کند. همچنین در صورت رسیدن موجودی به صفر، بلافاصله کالا ناموجود می‌شود.",
--    results: [
--      { label: "قیمت‌گذاری در دیجی‌کالا و سایت", value: "خودکار در چارچوب کف سود" },
--      { label: "زمان واکنش به تغییر رقیب", value: "از ساعت‌ها به چند ثانیه" },
--      { label: "بررسی دستی روزانه ترب", value: "سپرده‌شده به ربات زمان‌بندی‌شده" },
--      { label: "فروش کالای ناموجود", value: "ناموجودسازی خودکار با صفر شدن انبار" },
--    ],
--    tech: ["Python", "Playwright", "Digikala Seller API", "Torob Engine", "Redis Queue"],
--    quote:
--      "«قبلاً تغییر قیمت رقبا را ساعت‌ها دیرتر می‌دیدیم؛ با خودکار شدن پایش ترب و سقف و کف سود، تیم فروش به‌جای چک دستی قیمت روی تأمین کالا متمرکز شده است.»",
--    author: "مهندس علیرضا سلیمانی - مدیر توسعه بازار",
--  },
--  {
--    id: "sepidar-didar-distribution",
--    category: "accounting",
--    client: "شرکت پخش مواد غذایی و بهداشتی اروند",
--    field: "توزیع سراسری مویرگی و فروشگاه آنلاین B2B",
--    challenge:
--      "سفارش‌های آنلاین خریداران سوپرمارکت و داروخانه‌ها هر روز روی سایت و نرم‌افزار ویزیتوری ثبت می‌شد. نیروی حسابداری سفارش‌ها را دانه به دانه در نرم‌افزار حسابداری سپیدار تایپ می‌کرد. خطای تایپ کد اقلام، جا ماندن برخی اقلام و مغایرت انبار مرکزی، هزینه‌های مرجوعی قابل‌توجهی به بار می‌آورد.",
--    solution:
--      "پیاده‌سازی یکپارچه‌ساز دوطرفه میان سایت فروشگاهی، نرم‌افزار دیدار CRM و دیتابیس SQL Server سپیدار سیستم. به محض ثبت سفارش، پروسیدور ثبت فاکتور فروش و صدور حواله خروج از انبار در سپیدار اجرا شده، پرونده مشتری در دیدار CRM بروزرسانی گشته و پیامک تایید با شماره فاکتور برای مشتری ارسال می‌شود.",
--    results: [
--      { label: "صدور فاکتور رسمی و حواله", value: "خودکار پس از ثبت سفارش" },
--      { label: "ثبت دستی اقلام در سپیدار", value: "حذف تایپ دستی اپراتور" },
--      { label: "همگام‌سازی فروش و CRM", value: "اتصال دوطرفه خودکار" },
--      { label: "ارجاع به واحد انبار", value: "همان روز، بدون صف تایپ دستی" },
--    ],
--    tech: ["Sepidar SQL Procedures", "Didar CRM API", "WooCommerce Webhooks", "Node.js Microservice"],
--    quote:
--      "«اتصال به دیتابیس سپیدار مرحله‌به‌مرحله در محیط تست بررسی شد تا ساختار حسابداری به هم نریزد. الان نیروهای حسابداری روی مدیریت وصول مطالبات متمرکز شده‌اند.»",
--    author: "حمید پورمند - مدیر مالی شرکت اروند",
--  },
--  {
--    id: "telegram-ai-academy",
--    category: "messengers",
--    client: "موسسه آموزشی و کنکوری اندیشه برتر",
--    field: "برگزاری دوره‌های آنلاین و آزمون‌های کشوری",
--    challenge:
--      "در بازه‌های نزدیک به کنکور و کمپین‌های تخفیفی، انبوه دانش‌آموزان اقدام به واریز وجه کارت‌به‌کارت می‌کردند و تصویر رسید را به دایرکت و تلگرام می‌فرستادند. تیم پشتیبانی تا دیروقت کار می‌کرد اما پاسخگویی به هر دانش‌آموز ساعت‌ها طول می‌کشید. تعدادی رسید جعلی و فوتوشاپی نیز از چشم پشتیبانان مخفی مانده بود.",
--    solution:
--      "طراحی ربات دوطرفه تلگرام و بله با موتور OCR هوش مصنوعی فارسی نوین وب. ربات تصویر فیش بانکی را دریافت کرده، شماره پیگیری، تاریخ، مبلغ و نام صاحب حساب را در چند لحظه می‌خواند، از طریق وب‌سرویس بانک اصالت واریز را چک کرده و بلافاصله پنل دسترسی دوره را فعال می‌کند.",
--    results: [
--      { label: "بررسی رسید و فعال‌سازی دوره", value: "خودکار و شبانه‌روزی" },
--      { label: "رسیدهای تکراری و مشکوک", value: "کنترل خودکار + ارجاع به بازبینی" },
--      { label: "بار ترافیک پشتیبانی", value: "تمرکز فقط روی موارد استثنا" },
--      { label: "زمان انتظار دانش‌آموز", value: "از ساعت‌ها به چند لحظه پس از تأیید" },
--    ],
--    tech: ["Telegram Bot API", "Bale Bot SDK", "Persian OCR Model", "Zibal Inquiry API", "Python FastAPI"],
--    quote:
--      "«دانش‌آموزان نیمه‌شب هم فیش واریز را ارسال می‌کنند و پس از استعلام خودکار، لینک کلاس برایشان فعال می‌شود؛ تیم پشتیبانی فقط موارد مشکوک را بررسی می‌کند.»",
--    author: "دکتر مرادی - بنیان‌گذار موسسه اندیشه برتر",
--  },
--  {
--    id: "tender-scraper-industrial",
--    category: "scraping_ai",
--    client: "گروه مهندسی و پیمانکاری پارس سازه",
--    field: "پیمانکاری خطوط لوله و پروژه‌های نفت و گاز",
--    challenge:
--      "کارشناسان واحد مناقصات باید هر روز ساعت‌ها وقت خود را صرف چک کردن تک‌تک سایت‌های شرکت‌های تابعه نفت، سامانه‌های ستاد ایران و شهرداری‌ها می‌کردند. در چندین مورد اسناد یک مناقصه بزرگ به دلیل بررسی دیرهنگام سایت از دست رفت.",
--    solution:
--      "توسعه خزنده وب هوشمند که روزانه در ساعات مشخص، ده‌ها پایگاه اطلاع‌رسانی مناقصات و مزایدات کشوری را اسکرپ می‌کند. ربات متون آگهی را با کلمات کلیدی حوزه شرکت تطبیق داده و خلاصه اسناد، مهلت ارسال پیشنهاد و فایل‌های ضمیمه را در کانال تلگرام محرمانه هیئت‌مدیره و ایمیل مدیران قرار می‌دهد.",
--    results: [
--      { label: "پایش پرتال‌های مناقصات", value: "بررسی خودکار طبق فهرست هدف" },
--      { label: "اطلاع‌رسانی به تیم مهندسی", value: "ارسال خودکار به تلگرام و ایمیل" },
--      { label: "فیلتر آگهی‌های مرتبط", value: "تطبیق خودکار با کلیدواژه‌های تخصصی" },
--      { label: "وقت کارشناسان مناقصات", value: "متمرکز بر ارزیابی فنی اسناد" },
--    ],
--    tech: ["Scrapy Engine", "Headless Chrome", "Telegram Alerts", "PostgreSQL", "Docker Cron"],
--    quote:
--      "«قبل از ربات همیشه نگران جا ماندن از مهلت مناقصات مهم بودیم؛ حالا پرتال‌های هدف هر روز خودکار رصد می‌شوند و آگهی‌های مرتبط به‌موقع به دست تیم می‌رسد.»",
--    author: "مهندس جهانگیری - معاونت بازرگانی پارس سازه",
--  },
--];
-+/** پروژه‌هایی که به‌عنوان مطالعه موردی کامل نمایش داده می‌شوند */
-+const FEATURED = ["choob-wood-studio", "abrsorati-store", "nobat-sabz", "hamrah-ai-assistant"];
-+
-+const CASE_STUDIES = FEATURED.map((slug) => PROJECTS.find((p) => p.slug === slug)).filter(
-+  (p): p is Project => Boolean(p),
-+);
- 
- export default function CaseStudiesContent() {
-   const [selectedCategory, setSelectedCategory] = useState("all");
-@@ -122,17 +34,17 @@ export default function CaseStudiesContent() {
-         <div className="text-center max-w-3xl mx-auto space-y-4">
-           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-800/60 text-cyan-400 text-xs font-semibold">
-             <Award className="w-3.5 h-3.5" />
--            <span>مطالعات موردی و پروژه‌های عملیاتی نوین وب</span>
-+            <span>مطالعات موردی پروژه‌های واقعی نوین وب</span>
-           </div>
-           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
--            مطالعات موردی و نتایج عملیاتی
-+            پروژه‌ها را کامل ببینید، نه فقط عکس
-           </h1>
-           <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
--            این‌ها نمونه‌سناریوهای اجرایی از مسائلی هستند که با سیستم‌های خودکار حل می‌شوند؛ به‌جای وعده‌های کلی،
--            مسئله، معماری راه‌حل و خروجی عملیاتی هر سناریو را می‌بینید.
-+            هر مطالعه موردی همین‌جا قابل راستی‌آزمایی است: مسئله‌ی کارفرما، تصمیم‌های فنی، خروجی کار و
-+            لینک دموی زنده یا کد پروژه. هیچ نام مشتری و نقل‌قول ساختگی در این صفحه نیست.
-           </p>
-           <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
--            ایده یا فرایند مشابهی دارید؟{" "}
-+            وضعیت مشابهی دارید؟{" "}
-             <Link href="/idea" className="font-semibold text-cyan-400 hover:text-cyan-300">
-               ایده‌ی شما را مطرح کنید
-             </Link>{" "}
-@@ -162,26 +74,32 @@ export default function CaseStudiesContent() {
-         <div className="space-y-12">
-           {filteredCases.map((cs) => (
-             <div
--              key={cs.id}
-+              key={cs.slug}
-               className="bg-slate-900/80 border border-slate-800 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-sm"
-             >
-               {/* Header info */}
-               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-800">
--                <div>
--                  <div className="flex items-center gap-2 mb-2">
-+                <div className="space-y-1">
-+                  <div className="flex flex-wrap items-center gap-2">
-                     <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800/40">
-                       مطالعه موردی
-                     </span>
--                    <span className="text-xs text-slate-400">{cs.field}</span>
-+                    <span className="text-xs text-slate-400">{cs.client}</span>
-+                    <span className="text-[11px] text-slate-500 font-mono-num">{cs.year}</span>
-                   </div>
--                  <h2 className="text-xl sm:text-2xl font-bold text-white">{cs.client}</h2>
-+                  <h2 className="text-xl sm:text-2xl font-bold text-white">
-+                    <Link href={`/projects/${cs.slug}`} className="hover:text-cyan-300 transition-colors">
-+                      {cs.title}
-+                    </Link>
-+                  </h2>
-+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-2xl">{cs.subtitle}</p>
-                 </div>
- 
-                 <Link
--                  href="/contact"
-+                  href={`/projects/${cs.slug}`}
-                   className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors self-start lg:self-auto"
-                 >
--                  <span>درخواست سناریوی مشابه برای شرکت شما</span>
-+                  <span>مشاهده پرونده کامل پروژه</span>
-                   <ArrowLeft className="w-4 h-4 text-cyan-400" />
-                 </Link>
-               </div>
-@@ -191,11 +109,9 @@ export default function CaseStudiesContent() {
-                 <div className="p-5 rounded-2xl bg-red-950/20 border border-red-900/30 space-y-2">
-                   <h3 className="text-sm font-bold text-red-300 flex items-center gap-2">
-                     <span className="w-2 h-2 rounded-full bg-red-400" />
--                    چالش و معضلات اولیه کارفرما:
-+                    چالش اولیه کارفرما:
-                   </h3>
--                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
--                    {cs.challenge}
--                  </p>
-+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">{cs.challenge}</p>
-                 </div>
- 
-                 <div className="p-5 rounded-2xl bg-cyan-950/20 border border-cyan-800/40 space-y-2">
-@@ -203,25 +119,20 @@ export default function CaseStudiesContent() {
-                     <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                     راهکار و معماری پیاده‌شده توسط نوین وب:
-                   </h3>
--                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
--                    {cs.solution}
--                  </p>
-+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">{cs.solution}</p>
-                 </div>
-               </div>
- 
-               {/* Metrics Result Grid */}
-               <div className="py-6">
-                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
--                  نتایج پس از استقرار سیستم:
-+                  خروجی کار پس از تحویل:
-                 </h4>
-                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
--                  {cs.results.map((res, i) => (
--                    <div
--                      key={i}
--                      className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1"
--                    >
-+                  {cs.results.map((res) => (
-+                    <div key={res.label} className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
-                       <span className="text-xs text-slate-400 block">{res.label}</span>
--                      <span className="text-lg sm:text-xl font-black text-cyan-400 font-mono-num">
-+                      <span className="text-sm sm:text-base font-black text-cyan-400 font-mono-num leading-snug block">
-                         {res.value}
-                       </span>
-                     </div>
-@@ -229,15 +140,40 @@ export default function CaseStudiesContent() {
-                 </div>
-               </div>
- 
--              {/* Client Quote & Tech Stack */}
-+              {/* Verification links & Tech Stack */}
-               <div className="pt-6 border-t border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
--                <div className="space-y-1 max-w-2xl">
--                  <p className="text-xs sm:text-sm text-slate-300 italic">{cs.quote}</p>
--                  <span className="text-xs font-semibold text-slate-400 block">{cs.author}</span>
-+                <div className="space-y-2">
-+                  <span className="text-[11px] font-bold text-slate-400">
-+                    خودتان بررسی کنید — دموی زنده و کد پروژه:
-+                  </span>
-+                  <div className="flex flex-wrap items-center gap-2">
-+                    {cs.liveUrl && (
-+                      <a
-+                        href={cs.liveUrl}
-+                        target="_blank"
-+                        rel="noopener noreferrer"
-+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/60 text-emerald-300 text-[11px] font-semibold hover:border-emerald-500/70 transition-colors"
-+                      >
-+                        <ExternalLink className="w-3.5 h-3.5" />
-+                        {cs.liveLabel ?? "دموی زنده"}
-+                      </a>
-+                    )}
-+                    {cs.repo && (
-+                      <a
-+                        href={cs.repoUrl ?? `https://${cs.repo}`}
-+                        target="_blank"
-+                        rel="noopener noreferrer"
-+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950/80 border border-slate-700 text-slate-300 text-[11px] font-mono-num hover:border-cyan-700/70 hover:text-cyan-300 transition-colors"
-+                      >
-+                        <Code2 className="w-3.5 h-3.5" />
-+                        {cs.repo}
-+                      </a>
-+                    )}
-+                  </div>
-                 </div>
- 
-                 <div className="flex flex-wrap items-center gap-1.5 self-start md:self-auto">
--                  {cs.tech.map((t) => (
-+                  {cs.stack.map((t) => (
-                     <span
-                       key={t}
-                       className="text-[10px] font-mono-num px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/60"
-@@ -251,20 +187,25 @@ export default function CaseStudiesContent() {
-           ))}
-         </div>
- 
--        {/* یادداشت روش‌شناسی ارقام */}
--        <p className="text-[11px] leading-relaxed text-slate-500">
--          ارقام و نتیجه‌های نمایش‌داده‌شده مربوط به شرایط همان کارفرما و در بازه‌ی زمانی مشخص ثبت
--          شده‌اند و تعهد نتیجه برای پروژه‌ی تازه محسوب نمی‌شوند؛ ملاک هر پروژه، پروپوزال مکتوب همان
--          پروژه است.
--        </p>
-+        {/* روش‌شناسی */}
-+        <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
-+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-+          <p className="text-xs leading-relaxed text-slate-400">
-+            <span className="font-bold text-slate-200">چرا این صفحه قابل اعتماد است: </span>
-+            به‌جای نام و نقل‌قول ساختگی، برای هر پروژه لینک دموی زنده یا مخزن کد آمده است؛ می‌توانید
-+            خودتان باز کنید، خروجی را ببینید و حتی کد را بررسی کنید. اعداد «تعهد نتیجه» نیستند و ملاک
-+            هر پروژه‌ی تازه، پروپوزال مکتوب همان پروژه است.
-+          </p>
-+        </div>
- 
-         {/* Bottom CTA */}
-         <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/90 border border-slate-800 text-center space-y-4">
-           <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
--            می‌خواهید نام سازمان شما داستان موفقیت بعدی نوین وب باشد؟
-+            پروژه‌ی بعدی می‌تواند کسب‌وکار شما باشد
-           </h3>
-           <p className="text-sm text-slate-300 max-w-xl mx-auto">
--            کافیست یک جلسه آنلاین نیم‌ساعته با مهندسان ما داشته باشید تا برآورد صرفه‌جویی ماهانه سازمان خود را شفاف دریافت کنید.
-+            یک جلسه‌ی آنلاین نیم‌ساعته با مهندسان ما کافی است تا فرایندهای قابل خودکارسازی کسب‌وکارتان را
-+            مشخص کنیم و برآورد شفاف بگیرید.
-           </p>
-           <div className="pt-2">
-             <Link
-diff --git a/src/components/EnCaseStudiesContent.tsx b/src/components/EnCaseStudiesContent.tsx
-index ae64151..c2d71dc 100644
---- a/src/components/EnCaseStudiesContent.tsx
-+++ b/src/components/EnCaseStudiesContent.tsx
-@@ -2,102 +2,33 @@
- 
- import { useState } from "react";
- import Link from "next/link";
--import { ArrowRight, Award } from "lucide-react";
-+import { ArrowRight, Award, CheckCircle2, Code2, ExternalLink } from "lucide-react";
-+import { PROJECTS, type Project } from "@/data/projects";
-+import { PROJECTS_EN } from "@/data/projects.en";
- 
- const CATEGORIES = [
-   { id: "all", label: "All projects" },
--  { id: "marketplace", label: "Marketplace & Torob" },
--  { id: "accounting", label: "Sepidar, Holoo & CRM" },
--  { id: "messengers", label: "Telegram, Bale & Eitaa" },
--  { id: "scraping_ai", label: "Scraping & AI" },
-+  { id: "web", label: "Websites & stores" },
-+  { id: "bots", label: "Bots & messengers" },
-+  { id: "ai", label: "AI" },
- ];
- 
--const CASE_STUDIES = [
--  {
--    id: "auto-parts-torob",
--    category: "marketplace",
--    client: "Pishtaz Auto Parts Trading Co.",
--    field: "Auto spare-parts distribution and retail on Torob & Digikala",
--    challenge:
--      "The sales team manually checked prices of a wide range of SKUs on Torob for hours every day, then updated the Digikala seller panel and their own site. After each competitor price change, their turn to update took hours and they lost the buy-box. Several times, out-of-stock items kept selling, triggering Digikala penalties.",
--    solution:
--      "WebNovo built a dedicated Python + Playwright monitoring bot with rotating domestic IPs. At regular intervals it scrapes competitor prices on Torob, matches them against the warehouse's allowed-margin Excel table and automatically updates prices via the Digikala sellers web service and WooCommerce. When stock hits zero, the item is instantly marked unavailable.",
--    results: [
--      { label: "Pricing on Digikala & store", value: "Automated within margin floor" },
--      { label: "Reaction to competitor changes", value: "Hours → seconds" },
--      { label: "Daily manual Torob checks", value: "Handled by scheduled bot" },
--      { label: "Out-of-stock order risk", value: "Auto-disabled when stock hits zero" },
--    ],
--    tech: ["Python", "Playwright", "Digikala Seller API", "Torob Engine", "Redis Queue"],
--    quote:
--      "“Previously we noticed competitor price drops hours late; automating Torob checks inside strict margin rules freed the sales team to focus on sourcing.”",
--    author: "Alireza Soleimani — Market Development Manager",
--  },
--  {
--    id: "sepidar-didar-distribution",
--    category: "accounting",
--    client: "Arvand Food & Hygiene Distribution Co.",
--    field: "Nationwide capillary distribution and B2B online store",
--    challenge:
--      "Online orders from supermarkets and pharmacies arrived daily via the website and visitor software. Accounting staff typed orders one by one into Sepidar. Item-code typos, missed items and central-warehouse mismatches caused significant return costs.",
--    solution:
--      "A two-way integrator between the online store, Didar CRM and the Sepidar SQL Server database. On each order, the sales-invoice procedure and warehouse dispatch are executed in Sepidar, the customer profile updates in Didar, and an SMS with the invoice number goes to the customer.",
--    results: [
--      { label: "Official invoice & dispatch issuing", value: "Automated on order placement" },
--      { label: "Manual item typing in Sepidar", value: "Manual typing eliminated" },
--      { label: "Store & CRM synchronization", value: "Automated two-way sync" },
--      { label: "Warehouse handoff", value: "Same day, without manual queue" },
--    ],
--    tech: ["Sepidar SQL Procedures", "Didar CRM API", "WooCommerce Webhooks", "Node.js Microservice"],
--    quote:
--      "“The Sepidar database connection was tested step by step before launch so accounting records stayed intact. Our accountants now focus on collections instead of typing orders.”",
--    author: "Hamid Pourmand — Finance Manager, Arvand",
--  },
--  {
--    id: "telegram-ai-academy",
--    category: "messengers",
--    client: "Andisheh Bartar Educational Institute",
--    field: "Online courses and nationwide entrance-exam tests",
--    challenge:
--      "Near exam season and discount campaigns, floods of students made card-to-card deposits and sent receipt images to direct messages and Telegram. Support worked late yet each student waited hours for access; several forged receipts slipped through.",
--    solution:
--      "A two-way Telegram + Bale bot with WebNovo's Persian AI OCR engine. The bot reads the bank receipt — tracking number, date, amount, account holder — in moments, verifies the deposit via the bank web service and instantly activates course access.",
--    results: [
--      { label: "Receipt check & course access", value: "Automated, around the clock" },
--      { label: "Duplicate or suspicious receipts", value: "Auto-checked; flagged for review" },
--      { label: "Support ticket load", value: "Focused only on edge cases" },
--      { label: "Student wait time", value: "Hours → moments after confirmation" },
--    ],
--    tech: ["Telegram Bot API", "Bale Bot SDK", "Persian OCR Model", "Zibal Inquiry API", "Python FastAPI"],
--    quote:
--      "“Students even submit deposit slips late at night and receive their class link once verification passes; support only steps in on flagged receipts.”",
--    author: "Dr. Moradi — Founder, Andisheh Bartar",
--  },
--  {
--    id: "tender-scraper-industrial",
--    category: "scraping_ai",
--    client: "Pars Sazeh Engineering & Contracting Group",
--    field: "Pipeline contracting and oil & gas projects",
--    challenge:
--      "Tender specialists spent hours daily checking subsidiary oil-company sites, the national tender system and municipality portals one by one. On several occasions, major tender documents were missed because a site was checked too late.",
--    solution:
--      "An intelligent web crawler that scrapes dozens of national tender and auction portals on schedule. The bot matches ad texts against the company's keywords and delivers document summaries, submission deadlines and attachments to a confidential board Telegram channel and managers' emails.",
--    results: [
--      { label: "Monitored tender portals", value: "Scheduled checks on target portals" },
--      { label: "Team notifications", value: "Auto-sent to Telegram & email" },
--      { label: "Relevant tender filtering", value: "Matched by domain keywords" },
--      { label: "Specialist review time", value: "Focused on technical evaluation" },
--    ],
--    tech: ["Scrapy Engine", "Headless Chrome", "Telegram Alerts", "PostgreSQL", "Docker Cron"],
--    quote:
--      "“Before the bot we worried about noticing key tender deadlines too late; now our target portals are monitored daily and matching notices reach the team promptly.”",
--    author: "Mr. Jahangiri — Commercial Deputy, Pars Sazeh",
--  },
--];
-+const FEATURED = ["choob-wood-studio", "abrsorati-store", "nobat-sabz", "hamrah-ai-assistant"];
-+
-+const CASE_STUDIES = FEATURED.map((slug) => {
-+  const project = PROJECTS.find((p) => p.slug === slug);
-+  const en = PROJECTS_EN[slug];
-+  return project && en ? { project, en } : null;
-+}).filter((item): item is { project: Project; en: NonNullable<(typeof PROJECTS_EN)[string]> } =>
-+  Boolean(item),
-+);
- 
- export default function EnCaseStudiesContent() {
-   const [selected, setSelected] = useState("all");
--  const filtered = selected === "all" ? CASE_STUDIES : CASE_STUDIES.filter((c) => c.category === selected);
-+  const filtered =
-+    selected === "all"
-+      ? CASE_STUDIES
-+      : CASE_STUDIES.filter((item) => item.project.category === selected);
- 
-   return (
-     <main className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8" dir="ltr">
-@@ -105,14 +36,22 @@ export default function EnCaseStudiesContent() {
-         <div className="mx-auto max-w-3xl space-y-4 text-center">
-           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-800/60 bg-cyan-950/80 px-3 py-1 text-xs font-semibold text-cyan-400">
-             <Award className="h-3.5 w-3.5" />
--            WebNovo case studies &amp; operational projects
-+            Case studies of real WebNovo projects
-           </div>
-           <h1 className="text-3xl font-black leading-tight tracking-tight text-white sm:text-5xl">
--            Operational case studies &amp; outcomes
-+            See the whole project, not just a picture
-           </h1>
-           <p className="text-sm leading-relaxed text-slate-300 sm:text-base">
--            These scenarios illustrate how recurring business bottlenecks turn into automated
--            workflows — showing the problem, solution architecture and operational outcome.
-+            Every case study here is verifiable: the client&apos;s problem, the engineering decisions, the
-+            delivered outcome and a link to the live site or the source code. No invented client names or
-+            fake testimonials on this page.
-+          </p>
-+          <p className="text-xs leading-relaxed text-slate-400 sm:text-sm">
-+            Facing something similar?{" "}
-+            <Link href="/en/idea" className="font-semibold text-cyan-400 hover:text-cyan-300">
-+              Tell us about your idea
-+            </Link>{" "}
-+            and we will take a look.
-           </p>
-         </div>
- 
-@@ -122,7 +61,7 @@ export default function EnCaseStudiesContent() {
-               key={cat.id}
-               type="button"
-               onClick={() => setSelected(cat.id)}
--              className={`rounded-xl px-4 py-2 text-xs font-semibold transition-all sm:text-sm ${
-+              className={`cursor-pointer rounded-xl px-4 py-2 text-xs font-semibold transition-all sm:text-sm ${
-                 selected === cat.id
-                   ? "bg-cyan-500 font-bold text-slate-950 shadow-lg shadow-cyan-500/20"
-                   : "border border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white"
-@@ -134,23 +73,33 @@ export default function EnCaseStudiesContent() {
-         </div>
- 
-         <div className="space-y-12">
--          {filtered.map((cs) => (
--            <div key={cs.id} className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl sm:p-10">
-+          {filtered.map(({ project, en }) => (
-+            <div
-+              key={project.slug}
-+              className="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-sm sm:rounded-3xl sm:p-10"
-+            >
-               <div className="flex flex-col justify-between gap-4 border-b border-slate-800 pb-6 lg:flex-row lg:items-center">
--                <div>
--                  <div className="mb-2 flex items-center gap-2">
-+                <div className="space-y-1">
-+                  <div className="flex flex-wrap items-center gap-2">
-                     <span className="rounded-full border border-cyan-800/40 bg-cyan-950 px-2.5 py-0.5 text-[11px] font-bold text-cyan-300">
-                       Case study
-                     </span>
--                    <span className="text-xs text-slate-400">{cs.field}</span>
-+                    <span className="text-xs text-slate-400">{project.client}</span>
-+                    <span className="font-mono-num text-[11px] text-slate-500">{project.year}</span>
-                   </div>
--                  <h2 className="text-xl font-bold text-white sm:text-2xl">{cs.client}</h2>
-+                  <h2 className="text-xl font-bold text-white sm:text-2xl">
-+                    <Link href={`/en/projects/${project.slug}`} className="transition-colors hover:text-cyan-300">
-+                      {en.title}
-+                    </Link>
-+                  </h2>
-+                  <p className="max-w-2xl text-xs leading-relaxed text-slate-400 sm:text-sm">{en.subtitle}</p>
-                 </div>
-+
-                 <Link
--                  href="/en/contact"
-+                  href={`/en/projects/${project.slug}`}
-                   className="inline-flex items-center justify-center gap-2 self-start rounded-xl border border-slate-700 bg-slate-800 px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-slate-700 lg:self-auto"
-                 >
--                  Request a similar scenario
-+                  Open the full project file
-                   <ArrowRight className="h-4 w-4 text-cyan-400" />
-                 </Link>
-               </div>
-@@ -161,37 +110,69 @@ export default function EnCaseStudiesContent() {
-                     <span className="h-2 w-2 rounded-full bg-red-400" />
-                     The client&apos;s challenge:
-                   </h3>
--                  <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">{cs.challenge}</p>
-+                  <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">{en.challenge}</p>
-                 </div>
-                 <div className="space-y-2 rounded-2xl border border-cyan-800/40 bg-cyan-950/20 p-5">
-                   <h3 className="flex items-center gap-2 text-sm font-bold text-cyan-300">
-                     <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                     The solution WebNovo built:
-                   </h3>
--                  <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">{cs.solution}</p>
-+                  <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">{en.solution}</p>
-                 </div>
-               </div>
- 
-               <div className="py-6">
--                <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">Results after deployment:</h4>
-+                <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-400">
-+                  Delivered outcome:
-+                </h4>
-                 <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
--                  {cs.results.map((res) => (
-+                  {en.results.map((res) => (
-                     <div key={res.label} className="space-y-1 rounded-xl border border-slate-800 bg-slate-950/80 p-4">
-                       <span className="block text-xs text-slate-400">{res.label}</span>
--                      <span className="text-lg font-black text-cyan-400 sm:text-xl">{res.value}</span>
-+                      <span className="block text-sm font-black leading-snug text-cyan-400 sm:text-base">
-+                        {res.value}
-+                      </span>
-                     </div>
-                   ))}
-                 </div>
-               </div>
- 
-               <div className="flex flex-col justify-between gap-4 border-t border-slate-800/80 pt-6 md:flex-row md:items-center">
--                <div className="max-w-2xl space-y-1">
--                  <p className="text-xs italic text-slate-300 sm:text-sm">{cs.quote}</p>
--                  <span className="block text-xs font-semibold text-slate-400">{cs.author}</span>
-+                <div className="space-y-2">
-+                  <span className="text-[11px] font-bold text-slate-400">
-+                    Verify it yourself — live demo and source:
-+                  </span>
-+                  <div className="flex flex-wrap items-center gap-2">
-+                    {project.liveUrl && (
-+                      <a
-+                        href={project.liveUrl}
-+                        target="_blank"
-+                        rel="noopener noreferrer"
-+                        className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-800/60 bg-emerald-950/60 px-3 py-1.5 text-[11px] font-semibold text-emerald-300 transition-colors hover:border-emerald-500/70"
-+                      >
-+                        <ExternalLink className="h-3.5 w-3.5" />
-+                        {project.liveLabel ?? "Live demo"}
-+                      </a>
-+                    )}
-+                    {project.repo && (
-+                      <a
-+                        href={project.repoUrl ?? `https://${project.repo}`}
-+                        target="_blank"
-+                        rel="noopener noreferrer"
-+                        className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-950/80 px-3 py-1.5 font-mono-num text-[11px] text-slate-300 transition-colors hover:border-cyan-700/70 hover:text-cyan-300"
-+                      >
-+                        <Code2 className="h-3.5 w-3.5" />
-+                        {project.repo}
-+                      </a>
-+                    )}
-+                  </div>
-                 </div>
-                 <div className="flex flex-wrap items-center gap-1.5 self-start md:self-auto">
--                  {cs.tech.map((t) => (
--                    <span key={t} className="rounded border border-slate-700/60 bg-slate-800 px-2 py-0.5 text-[10px] text-slate-300">
-+                  {project.stack.map((t) => (
-+                    <span
-+                      key={t}
-+                      className="rounded border border-slate-700/60 bg-slate-800 px-2 py-0.5 font-mono-num text-[10px] text-slate-300"
-+                    >
-                       {t}
-                     </span>
-                   ))}
-@@ -201,17 +182,23 @@ export default function EnCaseStudiesContent() {
-           ))}
-         </div>
- 
--        <p className="text-[11px] leading-relaxed text-slate-500">
--          The figures and outcomes shown above belong to that specific client&apos;s conditions and a
--          defined reporting window; they are not a result guarantee for a new project. Each
--          engagement is defined by its own written proposal.
--        </p>
-+        <div className="flex items-start gap-3 rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
-+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
-+          <p className="text-xs leading-relaxed text-slate-400">
-+            <span className="font-bold text-slate-200">Why this page is trustworthy: </span>
-+            instead of invented client names and quotes, every project links to a live site or a public
-+            repository, so you can open it, try it and read the code. The figures are not a result
-+            guarantee; each engagement is defined by its own written proposal.
-+          </p>
-+        </div>
- 
-         <div className="space-y-4 rounded-3xl border border-slate-800 bg-slate-900/90 p-8 text-center sm:p-12">
--          <h3 className="text-2xl font-extrabold text-white sm:text-3xl">Want your organization to be our next success story?</h3>
-+          <h3 className="text-2xl font-extrabold text-white sm:text-3xl">
-+            Your business could be the next project
-+          </h3>
-           <p className="mx-auto max-w-xl text-sm text-slate-300">
--            A 30-minute online session with our engineers gives you a transparent estimate of your
--            monthly savings.
-+            A 30-minute online session with our engineers is enough to map the processes in your business
-+            that can be automated and to get a transparent estimate.
-           </p>
-           <Link
-             href="/en/contact"
 diff --git a/src/data/projects.en.ts b/src/data/projects.en.ts
-index ef23a5d..5a9d738 100644
+index ef23a5d..b673dd7 100644
 --- a/src/data/projects.en.ts
 +++ b/src/data/projects.en.ts
-@@ -16,73 +16,40 @@ export type ProjectEn = {
- 
- export const CATEGORY_LABELS_EN: Record<string, string> = {
-   all: "All projects",
--  bots: "Telegram & messenger bots",
--  dashboards: "Management dashboards",
-+  web: "Websites & brand",
-+  ecommerce: "E-commerce & online orders",
-+  bots: "Bots & messengers",
-   integration: "Integrations & APIs",
--  ai: "AI & data processing",
--  web: "Web & brand",
-+  ai: "AI & automation",
-+  desktop: "Desktop apps",
-+  dashboards: "Management dashboards",
+@@ -22,6 +22,8 @@ export const CATEGORY_LABELS_EN: Record<string, string> = {
+   ai: "AI & data processing",
+   web: "Web & brand",
    android: "Android apps",
++  ecommerce: "E-commerce & online orders",
++  desktop: "Desktop apps",
  };
  
  export const PROJECTS_EN: Record<string, ProjectEn> = {
--  "receipt-ocr-verification": {
--    title: "Bank Receipt OCR Verification",
--    subtitle: "AI reading of card-to-card receipts with duplicate/tamper detection and human review queue",
+@@ -132,6 +134,163 @@ export const PROJECTS_EN: Record<string, ProjectEn> = {
+     ],
+     liveNote: "Submitted on Cafe Bazaar (under review) + separate tester release channel",
+   },
 +  "choob-wood-studio": {
 +    title: "Handmade Woodwork Shop — Storefront, Ordering and Admin Panel",
 +    subtitle:
 +      "Product configurator, live laser-engraving preview, real customer orders, order tracking and a panel that runs the workshop",
-     summary:
--      "A live OCR system that reads bank receipt photos, matches them against expected payments and flags duplicates or tampered images for human review — used inside our payment bots.",
++    summary:
 +      "A complete website for a real woodworking studio: the customer picks the wood species, dimensions (including fully custom sizes), finish and engraving, sees a live preview of the engraving on the wood and gets the price instantly. Orders are placed with a unique tracking code, and the owner manages products, prices, content and orders from a dedicated admin panel.",
-     challenge:
--      "Admins verified deposit receipts by eye; forged or duplicate receipts occasionally slipped through, and manual checking slowed order delivery.",
++    challenge:
 +      "Handmade workshops usually take orders through DMs and WhatsApp: prices are calculated by hand every time, orders get lost between dozens of chats, and customers never know where their order stands. Every wood price change means calling the designer.",
-     solution:
--      "An OCR + validation pipeline extracts amount, date and tracking number, matches them to the expected payment, detects reuse/tampering and routes suspicious cases to a review queue.",
++    solution:
 +      "The workshop's pricing model — wood coefficient, finish cost, dimension factor, gift packaging, shipping and free-shipping threshold — became a live pricing engine, so the customer sees a transparent price on the spot. The cart validates Iranian mobile numbers, applies percentage coupons and issues a unique tracking code; customers follow the status on a full timeline (placed → review → deposit → build → QC → shipped → delivered). On the owner's side, the panel covers a sales dashboard, products and woods and services, order status changes with history, printable invoices, CSV export, contact-form inbox, coupons and JSON backups. Technical SEO (Store/Product/FAQ structured data, canonical, sitemap) and accessibility (keyboard navigation, dialog semantics, prefers-reduced-motion) were built in from the start.",
-     highlights: [
--      "Persian receipt OCR in production",
--      "Automatic approve/reject against expected payments",
--      "Human-review queue for edge cases",
++    highlights: [
 +      "Customisation studio: wood, custom dimensions, finish and engraving with live preview and instant pricing",
 +      "Cart with mobile validation, coupon codes, shipping cost and a free-shipping progress bar",
 +      "Unique tracking code and a full order-status timeline for the customer",
 +      "Full admin panel: orders, products, wood pricing, services, reviews, FAQ, coupons and site settings",
 +      "Sales dashboard with status distribution, printable invoices and CSV export for accounting",
 +      "Technical SEO and accessibility: structured data, sitemap, keyboard navigation, reduced-motion support",
-     ],
-     results: [
--      { label: "Payment verification time", value: "Hours → seconds" },
--      { label: "Manual support workload", value: "Substantially reduced" },
--      { label: "Duplicate or suspicious slips", value: "Auto-checked + review queue" },
--    ],
--  },
--  "marketplace-price-bot": {
--    title: "Marketplace Price Monitoring Bot",
--    subtitle: "Competitor price and stock monitoring with margin-based automatic repricing",
--    summary:
--      "A monitoring bot that tracks competitor prices and stock on marketplaces, alerts on changes and updates the store's prices automatically within a margin formula defined by the owner.",
--    challenge:
--      "Manual price checks every morning couldn't keep up with competitor changes, leading to lost buy-boxes or sales below cost.",
--    solution:
--      "Scheduled scraping with change alerts and automatic repricing bounded by the owner's margin rules, plus dashboards and Excel outputs.",
--    highlights: [
--      "Scheduled competitor monitoring",
--      "Margin-bounded automatic repricing",
--      "Instant change alerts",
--    ],
--    results: [
--      { label: "Competitor price reaction", value: "Hours → seconds" },
--      { label: "Manual work freed up", value: "Hours saved monthly" },
--      { label: "Out-of-stock listings", value: "Auto-disabled when stock hits zero" },
--    ],
--  },
--  "webnovo-portfolio": {
--    title: "WebNovo Portfolio & Automation Website",
--    subtitle: "The site you are on: Next.js, RTL/LTR bilingual, SEO-structured, with free automation tools",
--    summary:
--      "Our own site: a bilingual (Persian/English) Next.js platform with structured SEO, interactive tools like the automation check and ROI calculator, and a live workflow simulator.",
--    challenge:
--      "Presenting a technical portfolio to non-technical business owners required clear language, honest claims and fast, SEO-friendly pages.",
--    solution:
--      "App Router with static rendering where possible, structured data, hreflang bilingual architecture and interactive tools that demonstrate the work instead of describing it.",
--    highlights: [
--      "Bilingual fa/en with hreflang and per-language sitemaps",
--      "Interactive automation check and ROI calculator",
--      "Structured data and honest, business-first copy",
--    ],
--    results: [
--      { label: "New-lead alert latency", value: "Immediate via Telegram" },
--      { label: "Visitor conversion paths", value: "Clear entry points across pages" },
--      { label: "Deployment", value: "Ready on Vercel" },
++    ],
++    results: [
 +      { label: "Custom-order pricing", value: "Instant and transparent" },
 +      { label: "Customer order tracking", value: "Self-service with a tracking code" },
 +      { label: "Changing products, prices and copy", value: "In the panel, no developer needed" },
 +      { label: "Order intake", value: "No DMs or WhatsApp" },
-     ],
-   },
-   "nobat-sabz": {
-@@ -109,28 +76,137 @@ export const PROJECTS_EN: Record<string, ProjectEn> = {
-       { label: "Today's appointments and queue", value: "Always available on Telegram, web and Android" },
-     ],
-   },
--  "novo-music-player": {
--    title: "Novo Music Player (Android)",
--    subtitle: "A polished Android music player: gestures, widgets, equalizer and full Persian support",
++    ],
++  },
 +  "abrsorati-store": {
 +    title: "Abr Sorati Online Store",
 +    subtitle:
@@ -1470,80 +260,57 @@ index ef23a5d..5a9d738 100644
 +    title: "Custom WordPress Plugins: Order Form and AI Assistant",
 +    subtitle:
 +      "A five-step device-request form with tracking plus an AI chatbot wired to a language model and a custom prompt",
-     summary:
--      "A consumer Android music player with swipe gestures, home-screen widgets, a 5-band equalizer and complete Persian localization — showing our range beyond business automation.",
++    summary:
 +      "Two WordPress plugins written for real needs: a five-step device purchase request form with order records and status tracking, and a site AI assistant that answers with a custom prompt and files each conversation as a trackable request in the dashboard.",
-     challenge:
--      "Delivering a smooth, gesture-driven player with widgets and equalizer across diverse Android devices and versions.",
++    challenge:
 +      "WordPress sites usually run heavy off-the-shelf plugins: forms that do not match the real business flow, and chatbots that are nothing more than a widget where conversations are never stored. Leads get lost between email and the widget, and the sales team has no idea who asked what.",
-     solution:
--      "A native Android app with a gesture-based now-playing screen, customizable widgets, graphical equalizer and full RTL/Persian UI.",
++    solution:
 +      "The form plugin follows standard WordPress structure (custom post type, admin layer, internationalisation and RTL support): a five-step validated form, order records in the dashboard, a tracking number and a status page. The assistant plugin adds a REST endpoint for chat, a language-model integration, a prompt editable from the settings page, and turns each conversation into a request in the dashboard; every request has a status meta box and a conversation summary so follow-up is traceable. Input validation, sanitisation and capability checks are enforced throughout.",
-     highlights: [
--      "Swipe-based now-playing experience",
--      "Home-screen widget with controls",
--      "5-band graphical equalizer",
--      "Full Persian/RTL localization",
++    highlights: [
 +      "Five-step validated device request form with step-by-step validation",
 +      "Order records in the WordPress dashboard with status and tracking",
 +      "Chatbot wired to a language model with a custom prompt editable from settings",
 +      "Conversations converted into trackable requests with summary and status",
 +      "Standard WordPress structure: custom post type, REST, i18n and RTL",
 +      "Validation, sanitisation and capability checks across every route",
-     ],
-     results: [
--      { label: "Package size", value: "~13 MB" },
--      { label: "Compatibility", value: "Android 7 to 16" },
--      { label: "Widget controls", value: "6 buttons + timeline" },
--      { label: "Pricing model", value: "Free, ad-free" },
++    ],
++    results: [
 +      { label: "Customer request intake", value: "Structured, not in DMs" },
 +      { label: "Status tracking", value: "Inside the site" },
 +      { label: "AI conversations", value: "Turned into trackable leads" },
 +      { label: "Installation on WordPress sites", value: "No theme changes needed" },
-     ],
--    liveNote: "Submitted on Cafe Bazaar (under review) + separate tester release channel",
++    ],
 +    liveNote:
 +      "Both plugins are published in the webnovo repository, and the repair-tracking variant lives in my-awesome-project.",
-   },
++  },
  };
  
+ export function getProjectEn(slug: string): ProjectEn | undefined {
 diff --git a/src/data/projects.ts b/src/data/projects.ts
-index bc9975c..19466a4 100644
+index bc9975c..fb2d3b8 100644
 --- a/src/data/projects.ts
 +++ b/src/data/projects.ts
-@@ -1,13 +1,22 @@
--import novo from "./novo-music-player.json";
--
+@@ -1,13 +1,14 @@
+ import novo from "./novo-music-player.json";
+ 
  /**
 - * نمونه‌کارهای واقعی — استخراج‌شده از مخازن کد و گزارش‌های تحویل پروژه
 - * (مونوریپوی bot-company و پروژه‌های جانبی)
-+ * نمونه‌کارهای واقعی — همه‌ی موارد این فهرست از مخازن عمومی گیت‌هاب
-+ * (github.com/rsabzi) استخراج شده‌اند و برای هر کدام لینک کد و/یا دموی زنده
-+ * در دسترس است. هیچ پروژه‌ای از مونوریپوی خصوصی bot-company در این فهرست نیست.
++ * نمونه‌کارهای واقعی — استخراج‌شده از مخازن کد و گزارش‌های تحویل پروژه.
++ * پروژه‌های ۱ تا ۵ نمونه‌کارهای اولیه‌ی سایت هستند و ۶ مورد بعدی (از choob-wood-studio
++ * به بعد) از مخازن عمومی github.com/rsabzi اضافه شده‌اند و لینک دمو یا کد دارند.
   */
  
-+export type ProjectCategory =
-+  | "web"
-+  | "ecommerce"
-+  | "bots"
-+  | "integration"
-+  | "ai"
-+  | "desktop"
-+  | "dashboards"
-+  | "android";
-+
  export type Project = {
    slug: string;
 -  category: "bots" | "dashboards" | "integration" | "ai" | "web" | "android";
-+  category: ProjectCategory;
++  category: "bots" | "dashboards" | "integration" | "ai" | "web" | "android" | "ecommerce" | "desktop";
    title: string;
    subtitle: string;
    client: string;
-@@ -22,7 +31,13 @@ export type Project = {
-   highlights: string[];
+@@ -23,6 +24,11 @@ export type Project = {
    results: { label: string; value: string }[];
    stack: string[];
-+  /** نمایش متنی مخزن */
    repo?: string;
 +  /** لینک قابل کلیک مخزن */
 +  repoUrl?: string;
@@ -1553,166 +320,57 @@ index bc9975c..19466a4 100644
    liveNote?: string;
    /** لینک به صفحات خدمات مرتبط — برای لینک‌سازی دوطرفه‌ی پروژه ↔ سرویس */
    serviceLinks?: { href: string; label: string }[];
-@@ -39,138 +54,92 @@ export type Project = {
-   };
- };
- 
--export const PROJECT_CATEGORIES = [
-+export const PROJECT_CATEGORIES: { id: "all" | ProjectCategory; label: string }[] = [
-   { id: "all", label: "همه پروژه‌ها" },
--  { id: "bots", label: "ربات‌های تلگرام و پیام‌رسان" },
--  { id: "dashboards", label: "داشبوردهای مدیریتی" },
--  { id: "integration", label: "یکپارچه‌سازی و API" },
--  { id: "ai", label: "هوش مصنوعی و پردازش داده" },
--  { id: "web", label: "وب و برند" },
--  { id: "android", label: "اپلیکیشن اندروید" },
--] as const;
--
--const NOVO_IMAGES: Record<string, { alt: string; caption: string }> = {
--  "01-songs-tabs.png": {
--    alt: "فهرست آهنگ‌ها در اپ نوو با تب‌های همه آهنگ‌ها، علاقه‌مندی‌ها، پربازدیدترین و اخیراً",
--    caption: "کتابخانه و تب‌های لمسی",
--  },
--  "02-now-playing-swipe.png": {
--    alt: "صفحهٔ پخش اپ نوو با کاور آهنگ و پیش‌نمایش آهنگ بعدی هنگام کشیدن",
--    caption: "صفحهٔ پخش و کشیدن کاور",
--  },
--  "03-home-widget.png": {
--    alt: "ویجت صفحهٔ اصلی اپ نوو با کاور آهنگ، تایم‌لاین و دکمه‌های کنترل",
--    caption: "ویجت صفحهٔ اصلی",
--  },
--  "04-equalizer.png": {
--    alt: "اکولایزر پنج‌باندی گرافیکی اپ نوو",
--    caption: "اکولایزر پنج‌باندی",
--  },
--  "05-settings-fa.png": {
--    alt: "صفحهٔ تنظیمات اپ نوو با انتخاب زبان و رنگ تم",
--    caption: "تنظیمات فارسی",
--  },
--  "06-brand-novinweb.png": {
--    alt: "بخش «بیشتر از نوین‌وب» در تنظیمات اپ نوو",
--    caption: "بیشتر از نوین‌وب",
--  },
--};
-+  { id: "web", label: "وب‌سایت و برند" },
+@@ -47,6 +53,8 @@ export const PROJECT_CATEGORIES = [
+   { id: "ai", label: "هوش مصنوعی و پردازش داده" },
+   { id: "web", label: "وب و برند" },
+   { id: "android", label: "اپلیکیشن اندروید" },
 +  { id: "ecommerce", label: "فروشگاه و سفارش آنلاین" },
-+  { id: "bots", label: "ربات و پیام‌رسان" },
-+  { id: "ai", label: "هوش مصنوعی" },
 +  { id: "desktop", label: "اپلیکیشن دسکتاپ" },
-+  { id: "android", label: "اندروید" },
-+];
+ ] as const;
  
--function novoImage(filename: string) {
--  return `/images/works/novo/${filename.replace(/\.png$/, ".webp")}`;
--}
+ const NOVO_IMAGES: Record<string, { alt: string; caption: string }> = {
+@@ -80,6 +88,8 @@ function novoImage(filename: string) {
+   return `/images/works/novo/${filename.replace(/\.png$/, ".webp")}`;
+ }
+ 
 +const REPOS = "https://github.com/rsabzi";
- 
++
  export const PROJECTS: Project[] = [
    {
--    slug: "receipt-ocr-verification",
--    category: "ai",
--    title: "تأیید هوشمند رسید پرداخت با OCR فارسی",
--    subtitle: "خواندن فیش بانکی از تصویر و فعال‌سازی خودکار سرویس",
--    client: "ماژول مشترک ربات‌های پرداختی",
--    year: "۱۴۰۵",
--    image: "/images/case-ocr.jpg",
--    summary:
--      "ماژولی که تصویر رسید کارت‌به‌کارت را می‌گیرد، مبلغ، تاریخ، شماره پیگیری و مقصد را استخراج می‌کند و بدون دخالت پشتیبان درباره تأیید یا رد پرداخت تصمیم می‌گیرد.",
--    challenge:
--      "در ساعات اوج، انبوه عکس رسید به پشتیبانی می‌رسید. بررسی چشمی هر رسید زمان‌بر بود، تا ساعت‌ها طول می‌کشید و چند فیش فوتوشاپ‌شده هم از فیلتر انسانی رد شده بود.",
--    solution:
--      "پیش‌پردازش تصویر (اصلاح زاویه و کنتراست) و سپس استخراج فیلدهای کلیدی با موتور OCR فارسی و مدل زبانی. مبلغ و شماره پیگیری با رکورد انتظار پرداخت تطبیق داده می‌شود؛ رسیدهای تکراری، دستکاری‌شده یا خارج از بازه زمانی به‌صورت خودکار علامت‌گذاری و به صف بازبینی انسانی می‌روند.",
--    highlights: [
--      "استخراج مبلغ، تاریخ، شماره پیگیری و مقصد از تصویر فیش",
--      "تشخیص رسید تکراری با هش تصویر و شماره پیگیری",
--      "صف بازبینی انسانی فقط برای موارد مشکوک، نه همه رسیدها",
--      "پاسخ کاربر در چند ثانیه، ۲۴ ساعت شبانه‌روز",
--    ],
--    results: [
--      { label: "زمان تأیید پرداخت", value: "از چند ساعت به چند ثانیه" },
--      { label: "حجم بررسی دستی پشتیبانی", value: "کاهش چشمگیر" },
--      { label: "رسیدهای تکراری و مشکوک", value: "کنترل خودکار + ارجاع به بازبینی" },
--    ],
--    stack: ["Python", "OCR فارسی", "مدل زبانی", "Pillow", "FastAPI"],
--    serviceLinks: [
--      { href: "/services/ocr", label: "OCR فاکتور و فیش بانکی" },
--      { href: "/services/sales-bot", label: "تأیید فیش در ربات فروش" },
--    ],
--  },
--  {
--    slug: "marketplace-price-bot",
--    category: "integration",
--    title: "ربات رصد قیمت و همگام‌سازی موجودی مارکت‌پلیس",
--    subtitle: "ترب، دیجی‌کالا، باسلام و ایمالز در یک حلقه خودکار",
--    client: "فروشندگان آنلاین و بازرگانی‌های پخش",
--    year: "۱۴۰۴ – ۱۴۰۵",
--    image: "/images/case-marketplace.jpg",
--    summary:
--      "ربات مانیتورینگ که قیمت رقبا را روی مارکت‌پلیس‌های ایرانی رصد می‌کند، بر اساس قاعده سود مجاز قیمت را به‌روز می‌کند و موجودی را با انبار همگام نگه می‌دارد.",
--    challenge:
--      "تیم فروش هر روز ساعت‌ها قیمت رقبا را دستی چک می‌کرد و تا رسیدن نوبت به‌روزرسانی، بای‌باکس از دست رفته بود. فروش کالای ناموجود هم جریمه و لغو سفارش به همراه داشت.",
--    solution:
--      "اسکرپر مقاوم با مدیریت نرخ درخواست و تلاش مجدد، به‌علاوه اتصال به وب‌سرویس فروشندگان برای ثبت قیمت جدید. سقف و کف سود در یک جدول ساده تعریف می‌شود و ربات هرگز از آن عبور نمی‌کند؛ رسیدن موجودی به صفر بلافاصله کالا را ناموجود می‌کند و به مدیر هشدار تلگرامی می‌رود.",
--    highlights: [
--      "رصد دوره‌ای قیمت رقبا با مدیریت نرخ درخواست و خطا",
--      "قاعده سود مجاز: ربات هیچ‌وقت زیر کف قیمت نمی‌رود",
--      "همگام‌سازی موجودی با انبار و ناموجودسازی آنی",
--      "هشدار تلگرامی لحظه‌ای برای تغییرات مهم بازار",
--    ],
--    results: [
--      { label: "زمان واکنش به تغییر قیمت رقیب", value: "از ساعت به ثانیه" },
--      { label: "کار دستی آزادشده", value: "چندین ساعت در ماه" },
--      { label: "فروش کالای ناموجود", value: "ناموجودسازی خودکار با صفر شدن انبار" },
--    ],
--    stack: ["Python", "Playwright", "Digikala Seller API", "Redis", "Docker"],
--    serviceLinks: [{ href: "/services/price-monitoring", label: "ربات قیمت و وب اسکرپینگ" }],
--  },
--  {
--    slug: "webnovo-portfolio",
+     slug: "receipt-ocr-verification",
+@@ -245,6 +255,369 @@ export const PROJECTS: Project[] = [
+       ],
+     },
+   },
++  {
 +    slug: "choob-wood-studio",
-     category: "web",
--    title: "وب‌سایت برند شخصی نوین وب",
--    subtitle: "سایت چندصفحه‌ای فارسی با فرم تماس متصل به ربات تلگرام",
--    client: "پروژه داخلی — برند Webnovo",
++    category: "web",
 +    title: "سایت فروش دست‌سازه‌های چوبی + پنل مدیریت کارگاه",
 +    subtitle: "پیکربندی محصول، حکاکی لیزری با پیش‌نمایش زنده، سفارش، پیگیری و پنلی که همه‌چیز را می‌گرداند",
 +    client: "کارگاه چوب و هنر اُرسی",
-     year: "۱۴۰۵",
--    image: "/images/hero-automation.jpg",
++    year: "۱۴۰۵",
 +    image: "/images/works/choob/cover.webp",
 +    imageAlt: "میز کار چوبی دست‌ساز با اکسسوری‌های چوبی — تصویر هیروی سایت کارگاه اُرسی",
-     summary:
--      "همین سایتی که در حال مشاهده آن هستید: یک وب‌سایت چندصفحه‌ای راست‌به‌چپ با محاسبه‌گر ROI، شبیه‌ساز زنده گردش کار و فرمی که پیام را واقعاً و لحظه‌ای به تلگرام می‌رساند.",
++    summary:
 +      "یک سایت کامل برای یک کارگاه نجاری واقعی: مشتری گونه چوب، ابعاد (حتی ابعاد کاملاً سفارشی)، پوشش و حکاکی لیزری را انتخاب می‌کند، پیش‌نمایش حکاکی را روی چوب می‌بیند و قیمت را همان لحظه می‌داند. سفارش با کد پیگیری یکتا ثبت می‌شود و مدیر کارگاه با پنل، محصول و قیمت و سفارش و متن‌های سایت را خودش مدیریت می‌کند.",
-     challenge:
--      "پیام‌های ورودی سایت اگر فقط در دیتابیس ذخیره شوند، تا وقتی کسی پنل را باز نکند دیده نمی‌شوند. برای یک برند فنی، دیر پاسخ‌دادن یعنی از دست دادن پروژه.",
++    challenge:
 +      "کارگاه‌های دست‌ساز معمولاً سفارش را در دایرکت و واتساپ می‌گیرند: قیمت هر بار دستی حساب می‌شود، سفارش‌ها بین ده‌ها چت گم می‌شوند و مشتری هیچ‌وقت نمی‌داند سفارشش در چه مرحله‌ای است. هر تغییر قیمت چوب یا افزودن یک محصول هم یعنی تماس با طراح و انتظار.",
-     solution:
--      "فرم درخواست پروژه علاوه بر ثبت در دیتابیس، پیام را در همان ثانیه از طریق Bot API به تلگرام می‌فرستد؛ پس حتی اگر دیتابیس در دسترس نباشد، اعلان از دست نمی‌رود. سایت با Next.js App Router ساخته شده، کاملاً RTL است و برای استقرار روی Vercel آماده است.",
++    solution:
 +      "مدل قیمت‌گذاری کارگاه — ضریب هر گونه چوب، هزینه پوشش، ضریب ابعاد، بسته‌بندی کادویی، هزینه ارسال و سقف ارسال رایگان — به یک موتور قیمت‌گذاری لحظه‌ای تبدیل شد تا مشتری همان‌جا قیمت شفاف ببیند. سبد سفارش با اعتبارسنجی شماره موبایل ایرانی، کد تخفیف درصدی و صدور کد پیگیری یکتا کار می‌کند و مشتری وضعیت را روی خط زمانی (ثبت ← بررسی ← بیعانه ← ساخت ← کنترل کیفیت ← ارسال ← تحویل) می‌بیند. در سمت مدیر، پنلی ساخته شد با داشبورد فروش، مدیریت محصول و چوب و خدمات، تغییر وضعیت سفارش با ثبت سابقه، چاپ فاکتور، خروجی CSV، صندوق پیام‌های فرم تماس، کدهای تخفیف و پشتیبان‌گیری JSON. سئوی فنی (داده ساخت‌یافته Store/Product/FAQ، canonical، sitemap) و دسترس‌پذیری (ناوبری کیبورد، پنجره‌های dialog، احترام به prefers-reduced-motion) هم از ابتدا رعایت شد.",
-     highlights: [
--      "ارسال آنی لید به تلگرام (مستقل از وضعیت دیتابیس)",
--      "محاسبه‌گر تعاملی صرفه‌جویی و بازگشت سرمایه",
--      "شبیه‌ساز زنده گردش کار برای نمایش عملی اتوماسیون",
--      "طراحی RTL، ریسپانسیو و بهینه برای موبایل",
++    highlights: [
 +      "استودیوی شخصی‌سازی: چوب، ابعاد سفارشی، پوشش و حکاکی لیزری با پیش‌نمایش زنده و قیمت لحظه‌ای",
 +      "سبد سفارش با اعتبارسنجی موبایل، کد تخفیف، هزینه ارسال و نوار پیشرفت تا ارسال رایگان",
 +      "کد پیگیری یکتا و صفحه پیگیری وضعیت با خط زمانی کامل سفارش",
 +      "پنل مدیریت کامل: سفارش، محصول، قیمت چوب، خدمات، نظرات، سؤالات متداول، تخفیف و تنظیمات سایت",
 +      "داشبورد فروش با نمودار توزیع وضعیت، چاپ فاکتور و خروجی CSV برای حساب‌داری",
 +      "سئوی فنی و دسترس‌پذیری: داده ساخت‌یافته، sitemap، ناوبری کیبورد و prefers-reduced-motion",
-     ],
-     results: [
--      { label: "تأخیر اطلاع از درخواست جدید", value: "بلافاصله" },
--      { label: "مسیر تبدیل بازدیدکننده", value: "نقاط تماس مشخص در همه صفحه‌ها" },
--      { label: "استقرار", value: "آماده انتشار روی Vercel" },
++    ],
++    results: [
 +      { label: "قیمت سفارش سفارشی", value: "لحظه‌ای و شفاف، بدون تماس" },
 +      { label: "پیگیری سفارش مشتری", value: "خودکار با کد پیگیری" },
 +      { label: "تغییر محصول، قیمت و متن سایت", value: "در پنل، بدون برنامه‌نویس" },
 +      { label: "ثبت سفارش", value: "بدون دایرکت و واتساپ" },
-     ],
--    stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Drizzle ORM", "Telegram Bot API", "Vercel"],
--    repo: "bot-company/webnovo-portofolio",
++    ],
 +    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "JSON-LD", "Vercel"],
 +    liveUrl: "https://choob-phi.vercel.app",
 +    liveLabel: "دموی زنده",
@@ -1753,44 +411,8 @@ index bc9975c..19466a4 100644
 +        { href: `${REPOS}/choob`, label: "کد کامل در گیت‌هاب" },
 +      ],
 +    },
-   },
-   {
-     slug: "nobat-sabz",
--    category: "android",
-+    category: "bots",
-     title: "نوبت سبز (SabzTime)",
-     subtitle: "سامانه نوبت‌دهی کسب‌وکارها: ربات تلگرام، وب‌اپ و اپلیکیشن نیتیو اندروید روی یک هسته واحد",
-     client: "پروژه داخلی — نوین وب",
-@@ -199,49 +168,303 @@ export const PROJECTS: Project[] = [
-       { label: "نوبت‌ها و صف روز جاری", value: "همیشه در دسترس؛ تلگرام، وب‌اپ و اندروید" },
-     ],
-     stack: ["PHP", "MySQL", "Telegram Bot API", "Kotlin", "Jetpack Compose", "ZarinPal", "WooCommerce", "GitHub Actions"],
--    repo: "rsabzi/nobat_sabz",
-+    repo: "github.com/rsabzi/nobat_sabz",
-+    repoUrl: `${REPOS}/nobat_sabz`,
-     serviceLinks: [
-       { href: "/services/appointment-bot", label: "ربات نوبت‌دهی" },
-       { href: "/services/telegram-bot", label: "ربات تلگرام" },
-     ],
-   },
-   {
--    slug: novo.slug,
--    category: "android",
--    title: novo.title_fa,
--    subtitle: novo.summary_fa,
--    client: novo.client_fa,
--    year: novo.year,
--    image: novoImage(novo.cover_image),
--    imageAlt: NOVO_IMAGES[novo.cover_image].alt,
--    // کادرهای افقی روی خودِ ویجت تمرکز می‌کنند؛ گالری تصاویر کامل را نشان می‌دهد.
--    imagePosition: "center 25%",
--    summary: novo.summary_fa,
--    challenge: novo.body_fa[2],
--    solution: novo.body_fa[1],
--    highlights: novo.highlights_fa,
--    results: novo.metrics_fa,
--    stack: novo.stack,
--    liveNote: novo.status_fa,
++  },
++  {
 +    slug: "abrsorati-store",
 +    category: "ecommerce",
 +    title: "فروشگاه اینترنتی ابر صورتی",
@@ -2054,13 +676,7 @@ index bc9975c..19466a4 100644
 +    repo: "github.com/rsabzi/webnovo",
 +    repoUrl: `${REPOS}/webnovo`,
 +    liveNote: "کد هر دو افزونه در مخزن webnovo و نسخه‌ی پیگیری تعمیرات در مخزن my-awesome-project منتشر شده است.",
-     caseStudy: {
--      category: novo.category_fa,
--      role: novo.role_fa,
--      intro: novo.body_fa[0],
--      challengeTitle: "سخت‌ترین بخش کار",
--      solutionTitle: "ویجت و کنترل پخش",
--      resultsTitle: "مشخصات نوو",
++    caseStudy: {
 +      category: "افزونه وردپرس",
 +      role: "طراحی ساختار افزونه، مسیرهای REST، پنل تنظیمات و جریان ثبت سرنخ",
 +      intro:
@@ -2068,9 +684,7 @@ index bc9975c..19466a4 100644
 +      challengeTitle: "چالش: فرم و چت‌بات‌های آماده، به فرایند کسب‌وکار نمی‌خورند",
 +      solutionTitle: "راهکار: افزونه اختصاصی با ساختار استاندارد",
 +      resultsTitle: "خروجی کار",
-       sections: [
--        { title: "مهندسی انتشار", text: novo.body_fa[3] },
--        { title: "وضعیت امروز و حریم خصوصی", text: novo.body_fa[4] },
++      sections: [
 +        {
 +          title: "سرنخ گم نمی‌شود",
 +          text: "هر گفت‌وگو به یک درخواست در پیشخوان تبدیل می‌شود و خلاصه‌ی گفت‌وگو کنارش می‌نشیند؛ تیم پاسخ‌گویی می‌داند چه کسی چه پرسیده و در چه مرحله‌ای است.",
@@ -2083,74 +697,26 @@ index bc9975c..19466a4 100644
 +          title: "قابل انتقال",
 +          text: "ساختار پروژه با استانداردهای وردپرس نوشته شده (i18n، RTL، نوع نوشته سفارشی) تا روی سایت‌های دیگر هم بدون بازنویسی قابل استفاده باشد.",
 +        },
-       ],
--      gallery: novo.gallery.map((filename) => ({
--        image: novoImage(filename),
--        ...NOVO_IMAGES[filename],
--      })),
++      ],
 +      gallery: [],
-       links: [
--        { href: novo.links.store, label: "کافه‌بازار — در حال بررسی" },
--        { href: novo.links.releases, label: "نسخه‌ها و دانلود از GitHub" },
--        { href: novo.links.brand, label: "وب‌سایت نوین‌وب" },
++      links: [
 +        { href: `${REPOS}/webnovo`, label: "کد افزونه‌ها" },
 +        { href: `${REPOS}/my-awesome-project`, label: "افزونه ثبت و پیگیری تعمیرات" },
-       ],
-     },
-   },
-diff --git a/src/data/services.ts b/src/data/services.ts
-index b3d0164..78b364e 100644
---- a/src/data/services.ts
-+++ b/src/data/services.ts
-@@ -206,7 +206,7 @@ export const SERVICES: ServiceDef[] = [
-     ],
-     honestNote:
-       "اتصال به دایرکت اینستاگرام به قوانین و دسترسی‌های رسمی خود اینستاگرام بستگی دارد؛ در جلسه‌ی بررسی، مسیر واقعی و کم‌ریسک را بر اساس نیاز شما پیشنهاد می‌دهیم و وعده‌ی غیرقابل‌اجرا نمی‌دهیم.",
--    relatedProjects: ["receipt-ocr-verification"],
-+    relatedProjects: ["abrsorati-store"],
-     relatedServices: ["telegram-bot", "crm", "ocr"],
-     faq: [
-       {
-@@ -600,7 +600,7 @@ export const SERVICES: ServiceDef[] = [
-         desc: "لیست محصولات، مشخصات و قیمت‌ها از سایت‌های هدف استخراج و مرتب تحویل داده می‌شود.",
-       },
-     ],
--    relatedProjects: ["marketplace-price-bot"],
-+    relatedProjects: [],
-     relatedServices: ["sales-bot", "ocr"],
-     faq: [
-       {
-@@ -667,12 +667,12 @@ export const SERVICES: ServiceDef[] = [
-         desc: "خواندن فیلدهای مشخص از اسناد تکراری و تحویل خروجی ساختاریافته برای مراحل بعدی.",
-       },
-     ],
--    relatedProjects: ["receipt-ocr-verification"],
-+    relatedProjects: [],
-     relatedServices: ["sales-bot", "ai-chatbot", "price-monitoring"],
-     faq: [
-       {
-         q: "OCR فارسی هم پشتیبانی می‌شود؟",
--        a: "بله؛ تمرکز اصلی ما روی فیش‌ها و فاکتورهای فارسی است و نمونه‌ی فعال آن در ربات‌های پرداختی‌مان کار می‌کند.",
-+        a: "بله؛ تمرکز ما روی فیش‌ها و فاکتورهای فارسی است. برای هر پروژه، دقت را روی نمونه‌های واقعی خود شما می‌سنجیم و بعد از تأیید، سیستم را تحویل می‌دهیم.",
-       },
-       {
-         q: "دقت خواندن چقدر است؟",
++      ],
++    },
++  },
+ ];
+ 
+ export function getProject(slug: string) {
 diff --git a/src/lib/site-analytics.ts b/src/lib/site-analytics.ts
-index b38cf75..79e1d27 100644
+index b38cf75..25e110f 100644
 --- a/src/lib/site-analytics.ts
 +++ b/src/lib/site-analytics.ts
-@@ -27,12 +27,13 @@ export const PAGE_TITLES: Record<string, string> = {
-   "/pricing": "پلن‌ها و تعرفه‌ها",
-   "/about": "درباره ما و امنیت",
-   "/contact": "تماس و ثبت پروژه",
--  "/projects/novo-music-player": "اپلیکیشن اندروید نوو (Novo)",
--  "/projects/lbank-affiliate-dashboard": "داشبورد نمایندگی LBank",
--  "/projects/lbank-trading-view-sync": "همگام‌ساز سیگنال صرافی",
--  "/projects/marketplace-automation": "اتوماسیون دیجی‌کالا و ترب",
--  "/projects/persian-receipt-ocr": "سیستم هوشمند OCR رسید بانکی",
--  "/projects/webnovo-portfolio": "پرتفولیو و معماری نوین وب",
+@@ -33,6 +33,12 @@ export const PAGE_TITLES: Record<string, string> = {
+   "/projects/marketplace-automation": "اتوماسیون دیجی‌کالا و ترب",
+   "/projects/persian-receipt-ocr": "سیستم هوشمند OCR رسید بانکی",
+   "/projects/webnovo-portfolio": "پرتفولیو و معماری نوین وب",
 +  "/projects/choob-wood-studio": "سایت و پنل کارگاه چوب اُرسی",
-+  "/projects/nobat-sabz": "سامانه نوبت‌دهی نوبت سبز",
 +  "/projects/abrsorati-store": "فروشگاه اینترنتی ابر صورتی",
 +  "/projects/hamrah-ai-assistant": "دستیار هوشمند همراه",
 +  "/projects/file-organizer-desktop": "سازمان‌ده خودکار فایل‌ها",

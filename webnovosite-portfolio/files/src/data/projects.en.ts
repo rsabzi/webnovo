@@ -16,40 +16,75 @@ export type ProjectEn = {
 
 export const CATEGORY_LABELS_EN: Record<string, string> = {
   all: "All projects",
-  web: "Websites & brand",
-  ecommerce: "E-commerce & online orders",
-  bots: "Bots & messengers",
-  integration: "Integrations & APIs",
-  ai: "AI & automation",
-  desktop: "Desktop apps",
+  bots: "Telegram & messenger bots",
   dashboards: "Management dashboards",
+  integration: "Integrations & APIs",
+  ai: "AI & data processing",
+  web: "Web & brand",
   android: "Android apps",
+  ecommerce: "E-commerce & online orders",
+  desktop: "Desktop apps",
 };
 
 export const PROJECTS_EN: Record<string, ProjectEn> = {
-  "choob-wood-studio": {
-    title: "Handmade Woodwork Shop — Storefront, Ordering and Admin Panel",
-    subtitle:
-      "Product configurator, live laser-engraving preview, real customer orders, order tracking and a panel that runs the workshop",
+  "receipt-ocr-verification": {
+    title: "Bank Receipt OCR Verification",
+    subtitle: "AI reading of card-to-card receipts with duplicate/tamper detection and human review queue",
     summary:
-      "A complete website for a real woodworking studio: the customer picks the wood species, dimensions (including fully custom sizes), finish and engraving, sees a live preview of the engraving on the wood and gets the price instantly. Orders are placed with a unique tracking code, and the owner manages products, prices, content and orders from a dedicated admin panel.",
+      "A live OCR system that reads bank receipt photos, matches them against expected payments and flags duplicates or tampered images for human review — used inside our payment bots.",
     challenge:
-      "Handmade workshops usually take orders through DMs and WhatsApp: prices are calculated by hand every time, orders get lost between dozens of chats, and customers never know where their order stands. Every wood price change means calling the designer.",
+      "Admins verified deposit receipts by eye; forged or duplicate receipts occasionally slipped through, and manual checking slowed order delivery.",
     solution:
-      "The workshop's pricing model — wood coefficient, finish cost, dimension factor, gift packaging, shipping and free-shipping threshold — became a live pricing engine, so the customer sees a transparent price on the spot. The cart validates Iranian mobile numbers, applies percentage coupons and issues a unique tracking code; customers follow the status on a full timeline (placed → review → deposit → build → QC → shipped → delivered). On the owner's side, the panel covers a sales dashboard, products and woods and services, order status changes with history, printable invoices, CSV export, contact-form inbox, coupons and JSON backups. Technical SEO (Store/Product/FAQ structured data, canonical, sitemap) and accessibility (keyboard navigation, dialog semantics, prefers-reduced-motion) were built in from the start.",
+      "An OCR + validation pipeline extracts amount, date and tracking number, matches them to the expected payment, detects reuse/tampering and routes suspicious cases to a review queue.",
     highlights: [
-      "Customisation studio: wood, custom dimensions, finish and engraving with live preview and instant pricing",
-      "Cart with mobile validation, coupon codes, shipping cost and a free-shipping progress bar",
-      "Unique tracking code and a full order-status timeline for the customer",
-      "Full admin panel: orders, products, wood pricing, services, reviews, FAQ, coupons and site settings",
-      "Sales dashboard with status distribution, printable invoices and CSV export for accounting",
-      "Technical SEO and accessibility: structured data, sitemap, keyboard navigation, reduced-motion support",
+      "Persian receipt OCR in production",
+      "Automatic approve/reject against expected payments",
+      "Human-review queue for edge cases",
     ],
     results: [
-      { label: "Custom-order pricing", value: "Instant and transparent" },
-      { label: "Customer order tracking", value: "Self-service with a tracking code" },
-      { label: "Changing products, prices and copy", value: "In the panel, no developer needed" },
-      { label: "Order intake", value: "No DMs or WhatsApp" },
+      { label: "Payment verification time", value: "Hours → seconds" },
+      { label: "Manual support workload", value: "Substantially reduced" },
+      { label: "Duplicate or suspicious slips", value: "Auto-checked + review queue" },
+    ],
+  },
+  "marketplace-price-bot": {
+    title: "Marketplace Price Monitoring Bot",
+    subtitle: "Competitor price and stock monitoring with margin-based automatic repricing",
+    summary:
+      "A monitoring bot that tracks competitor prices and stock on marketplaces, alerts on changes and updates the store's prices automatically within a margin formula defined by the owner.",
+    challenge:
+      "Manual price checks every morning couldn't keep up with competitor changes, leading to lost buy-boxes or sales below cost.",
+    solution:
+      "Scheduled scraping with change alerts and automatic repricing bounded by the owner's margin rules, plus dashboards and Excel outputs.",
+    highlights: [
+      "Scheduled competitor monitoring",
+      "Margin-bounded automatic repricing",
+      "Instant change alerts",
+    ],
+    results: [
+      { label: "Competitor price reaction", value: "Hours → seconds" },
+      { label: "Manual work freed up", value: "Hours saved monthly" },
+      { label: "Out-of-stock listings", value: "Auto-disabled when stock hits zero" },
+    ],
+  },
+  "webnovo-portfolio": {
+    title: "WebNovo Portfolio & Automation Website",
+    subtitle: "The site you are on: Next.js, RTL/LTR bilingual, SEO-structured, with free automation tools",
+    summary:
+      "Our own site: a bilingual (Persian/English) Next.js platform with structured SEO, interactive tools like the automation check and ROI calculator, and a live workflow simulator.",
+    challenge:
+      "Presenting a technical portfolio to non-technical business owners required clear language, honest claims and fast, SEO-friendly pages.",
+    solution:
+      "App Router with static rendering where possible, structured data, hreflang bilingual architecture and interactive tools that demonstrate the work instead of describing it.",
+    highlights: [
+      "Bilingual fa/en with hreflang and per-language sitemaps",
+      "Interactive automation check and ROI calculator",
+      "Structured data and honest, business-first copy",
+    ],
+    results: [
+      { label: "New-lead alert latency", value: "Immediate via Telegram" },
+      { label: "Visitor conversion paths", value: "Clear entry points across pages" },
+      { label: "Deployment", value: "Ready on Vercel" },
     ],
   },
   "nobat-sabz": {
@@ -74,6 +109,54 @@ export const PROJECTS_EN: Record<string, ProjectEn> = {
       { label: "Pre-appointment reminders", value: "Automatic, no manual follow-up" },
       { label: "Cancellations and rescheduling", value: "Self-service by the customer" },
       { label: "Today's appointments and queue", value: "Always available on Telegram, web and Android" },
+    ],
+  },
+  "novo-music-player": {
+    title: "Novo Music Player (Android)",
+    subtitle: "A polished Android music player: gestures, widgets, equalizer and full Persian support",
+    summary:
+      "A consumer Android music player with swipe gestures, home-screen widgets, a 5-band equalizer and complete Persian localization — showing our range beyond business automation.",
+    challenge:
+      "Delivering a smooth, gesture-driven player with widgets and equalizer across diverse Android devices and versions.",
+    solution:
+      "A native Android app with a gesture-based now-playing screen, customizable widgets, graphical equalizer and full RTL/Persian UI.",
+    highlights: [
+      "Swipe-based now-playing experience",
+      "Home-screen widget with controls",
+      "5-band graphical equalizer",
+      "Full Persian/RTL localization",
+    ],
+    results: [
+      { label: "Package size", value: "~13 MB" },
+      { label: "Compatibility", value: "Android 7 to 16" },
+      { label: "Widget controls", value: "6 buttons + timeline" },
+      { label: "Pricing model", value: "Free, ad-free" },
+    ],
+    liveNote: "Submitted on Cafe Bazaar (under review) + separate tester release channel",
+  },
+  "choob-wood-studio": {
+    title: "Handmade Woodwork Shop — Storefront, Ordering and Admin Panel",
+    subtitle:
+      "Product configurator, live laser-engraving preview, real customer orders, order tracking and a panel that runs the workshop",
+    summary:
+      "A complete website for a real woodworking studio: the customer picks the wood species, dimensions (including fully custom sizes), finish and engraving, sees a live preview of the engraving on the wood and gets the price instantly. Orders are placed with a unique tracking code, and the owner manages products, prices, content and orders from a dedicated admin panel.",
+    challenge:
+      "Handmade workshops usually take orders through DMs and WhatsApp: prices are calculated by hand every time, orders get lost between dozens of chats, and customers never know where their order stands. Every wood price change means calling the designer.",
+    solution:
+      "The workshop's pricing model — wood coefficient, finish cost, dimension factor, gift packaging, shipping and free-shipping threshold — became a live pricing engine, so the customer sees a transparent price on the spot. The cart validates Iranian mobile numbers, applies percentage coupons and issues a unique tracking code; customers follow the status on a full timeline (placed → review → deposit → build → QC → shipped → delivered). On the owner's side, the panel covers a sales dashboard, products and woods and services, order status changes with history, printable invoices, CSV export, contact-form inbox, coupons and JSON backups. Technical SEO (Store/Product/FAQ structured data, canonical, sitemap) and accessibility (keyboard navigation, dialog semantics, prefers-reduced-motion) were built in from the start.",
+    highlights: [
+      "Customisation studio: wood, custom dimensions, finish and engraving with live preview and instant pricing",
+      "Cart with mobile validation, coupon codes, shipping cost and a free-shipping progress bar",
+      "Unique tracking code and a full order-status timeline for the customer",
+      "Full admin panel: orders, products, wood pricing, services, reviews, FAQ, coupons and site settings",
+      "Sales dashboard with status distribution, printable invoices and CSV export for accounting",
+      "Technical SEO and accessibility: structured data, sitemap, keyboard navigation, reduced-motion support",
+    ],
+    results: [
+      { label: "Custom-order pricing", value: "Instant and transparent" },
+      { label: "Customer order tracking", value: "Self-service with a tracking code" },
+      { label: "Changing products, prices and copy", value: "In the panel, no developer needed" },
+      { label: "Order intake", value: "No DMs or WhatsApp" },
     ],
   },
   "abrsorati-store": {

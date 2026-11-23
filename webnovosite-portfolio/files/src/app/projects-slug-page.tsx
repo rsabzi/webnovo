@@ -9,12 +9,12 @@ import {
   Calendar,
   CheckCircle2,
   Code2,
+  ExternalLink,
   Send,
   Target,
   Wrench,
   TrendingUp,
   Building2,
-  ExternalLink,
 } from "lucide-react";
 import { PROJECTS, getProject } from "@/data/projects";
 import { SITE } from "@/data/site";

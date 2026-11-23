@@ -20,6 +20,36 @@
 - ریپوی `rsabzi/Bot-chance` **خصوصی** است؛ اگر `gh api repos/rsabzi/Bot-chance` هم `403` داد، بخش ۳ را انجام نده، بقیه را کامل کن و در گزارش بنویس «بدون دسترسی به Bot-chance متوقف شد».
 - اگر `git push` به `webnovosite` خطای `403 Permission denied` داد، توقف کن و گزارش بده.
 
+### ۱) اول: مطمئن شو ۵ پروژهٔ قبلی سر جایشان هستند (وگرنه برشان گردان)
+این تغییرات **افزودنی** است و روی وضعیتی اعمال می‌شود که هر ۵ پروژهٔ قبلی در آن باشند. اول بررسی کن:
+
+```bash
+for s in receipt-ocr-verification marketplace-price-bot webnovo-portfolio nobat-sabz novo-music-player; do
+  grep -q "slug: \"$s\"" src/data/projects.ts && echo "OK      $s" || echo "MISSING $s"
+done
+```
+
+- **اگر همه `OK` بودند** → مستقیم برو سراغ بخش ۲.
+- **اگر حتی یکی `MISSING` بود** (یعنی قبلاً حذف شده)، همان‌ها را از آخرین کامیت سالم برگردان و بعد تغییرات را اعمال کن:
+
+```bash
+# آخرین کامیت سالمی که هر ۵ پروژه را دارد
+git checkout b08d557 -- src/data/projects.ts src/data/projects.en.ts
+
+# اگر تصاویر پروژه‌های قدیمی هم پاک شده‌اند:
+git checkout b08d557 -- public/images/case-ocr.jpg public/images/case-marketplace.jpg   public/images/hero-automation.jpg public/images/works/novo/ 2>/dev/null || true
+
+# اگر صفحهٔ اصلی یا مطالعات موردی هم دست‌کاری شده بود (اختیاری، فقط اگر لازم است):
+# git checkout b08d557 -- src/app/page.tsx src/app/en/page.tsx src/components/CaseStudiesContent.tsx \
+#   src/components/EnCaseStudiesContent.tsx src/data/services.ts
+
+# دوباره چک کن
+for s in receipt-ocr-verification marketplace-price-bot webnovo-portfolio nobat-sabz novo-music-player; do
+  grep -q "slug: \"$s\"" src/data/projects.ts && echo "OK      $s" || echo "STILL MISSING $s"
+done
+```
+تا وقتی هر ۵ مورد `OK` نشده، ادامه نده.
+
 ### ۱) اعمال تغییرات آماده (۱۱ پروژه)
 ```bash
 git clone --depth 1 https://github.com/rsabzi/webnovo.git /tmp/wn-src
@@ -39,7 +69,7 @@ cp -R /tmp/wn-src/webnovosite-portfolio/public/images/works/. public/images/work
 | `files/src/app/en-projects-slug-page.tsx` | `src/app/en/projects/[slug]/page.tsx` |
 | `public/images/works/*` | `public/images/works/*` (۲۹ فایل webp) |
 
-### ۲) قیدهای محتوایی (نقض نکن)
+### ۲) اعمال تغییرات آماده (۶ پروژهٔ جدید) و قیدهای محتوایی
 - **هیچ پروژه‌ای حذف یا جایگزین نشود.** این ۵ پروژه باید عیناً بمانند: `receipt-ocr-verification`، `marketplace-price-bot`، `webnovo-portfolio`، `nobat-sabz`، `novo-music-player`.
 - این فایل‌ها **نباید** تغییر کنند: `src/components/CaseStudiesContent.tsx`، `src/components/EnCaseStudiesContent.tsx`، `src/app/page.tsx`، `src/app/en/page.tsx`، `src/app/projects/page.tsx`، `src/app/en/projects/page.tsx`، `src/data/services.ts`.
 - این فایل‌ها **نباید** پاک شوند: `src/data/novo-music-player.json`، `public/images/works/novo/`، `public/images/case-ocr.jpg`، `public/images/case-marketplace.jpg`، `public/images/hero-automation.jpg`.
